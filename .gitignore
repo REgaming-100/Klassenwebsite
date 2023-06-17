@@ -1,0 +1,9 @@
+replit.nix
+.replit
+compile
+requests.log
+com
+articles/*
+articles/DRAFTS/*
+!articles/keywords.json
+assets/css/.sass_cache

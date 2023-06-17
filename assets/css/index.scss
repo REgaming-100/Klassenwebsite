@@ -1,0 +1,38 @@
+@import 'general';
+
+#show-features {
+  cursor: pointer;
+
+  i {
+    margin-left: 5px;
+    position: relative;
+    top: 2px;
+  }
+}
+
+#features {
+  display: none;
+
+  .feature {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #eeeeee;
+    border: 2px solid #cccccc;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 25px;
+
+    &:last-child {
+      margin-bottom: 0;
+    } 
+
+    i {
+      font-size: 30px;
+    }
+
+    div p {
+      margin-bottom: 0;
+    }
+  }
+}

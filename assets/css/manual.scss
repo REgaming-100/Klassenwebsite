@@ -1,0 +1,31 @@
+@import 'general';
+
+.show-section {
+  cursor: pointer;
+
+  i {
+    margin-left: 5px;
+    position: relative;
+    top: 2px;
+  }
+}
+
+.showable-section {
+  display: none;
+}
+
+h3 i {
+  margin: 0 5px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+testh1 {
+  font-size: 26px;
+}
+
+testh4 {
+  font-size: 13.26px;
+}
