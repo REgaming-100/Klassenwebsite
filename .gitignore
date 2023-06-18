@@ -6,4 +6,4 @@ com
 articles/*
 articles/DRAFTS/*
 !articles/keywords.json
-assets/css/.sass_cache
+assets/css/.sass-cache
