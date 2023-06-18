@@ -60,8 +60,11 @@ function lexer($text) {
       case "~":
         newToken("TagTilde", $currentToken, $allTokens);
         break;
+      case "^":
+        newToken("TagCaret", $currentToken, $allTokens);
+        break;
       default:
-        if (!isset($currentToken) || in_array($currentToken->type, ["NewLine", "TagAsterisk", "TagUnderscore", "TagTilde"])) {
+        if (!isset($currentToken) || in_array($currentToken->type, ["NewLine", "TagAsterisk", "TagUnderscore", "TagTilde", "TagCaret"])) {
           newToken("Text", $currentToken, $allTokens);
         }
         $currentToken->addToContent($char);
@@ -155,9 +158,10 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = []) {
     }
     else if (str_starts_with($token->type, "Tag")) {
       $out["content"][] = evaluateInTag([
-        "Asterisk" => "b",
-        "Underscore" => "i",
-        "Tilde" => "u"
+        "Asterisk" => "i",
+        "Underscore" => "u",
+        "Tilde" => "s",
+        "Caret" => "b"
       ][substr($token->type, 3)], new Token($token->type), $ta, $ti);
     }
     else if ($token->type == "NewLine") {}

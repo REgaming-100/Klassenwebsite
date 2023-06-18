@@ -131,6 +131,7 @@ function iterateTags($elementArray) {
       $escapedDangers = str_replace("*", "\\*", $escapedDangers);
       $escapedDangers = str_replace("_", "\\_", $escapedDangers);
       $escapedDangers = str_replace("~", "\\~", $escapedDangers);
+      $escapedDangers = str_replace("^", "\\^", $escapedDangers);
 
       $body .= $escapedDangers;
     }
@@ -156,12 +157,15 @@ function iterateTags($elementArray) {
           $body .= iterateTags($content)."\n\n";
           break;
         case "b":
-          $body .= "*".iterateTags($content)."*";
+          $body .= "^".iterateTags($content)."^";
           break;
         case "i":
-          $body .= "_".iterateTags($content)."_";
+          $body .= "*".iterateTags($content)."*";
           break;
         case "u":
+          $body .= "_".iterateTags($content)."_";
+          break;
+        case "s":
           $body .= "~".iterateTags($content)."~";
           break;
         case "blockquote":
