@@ -4,6 +4,8 @@ compile
 requests.log
 com
 articles/*
-articles/DRAFTS/*
-!articles/keywords.json
+!articles/keywords
 assets/css/.sass-cache
+assets/css/*.css
+assets/css/*.css.map
+assets/images/profiles/*
