@@ -70,7 +70,6 @@ if (in_array($topic, $allTopics)) {
 $timestampFormatted = date("j. ", $timestamp).$monthNames[date("n", $timestamp) - 1].date(" o \u\m H:i", $timestamp);
 
 echo "Von ".$articleData["infos"]["author"].", ".$timestampFormatted;
-
       ?></p>
       <div>
         <div id="change-version">
@@ -128,10 +127,19 @@ function iterateTags($elementArray) {
       echo "<$type>";
       switch ($type) {
         case "blockquote":
-          echo "<i class=\"fa-solid fa-quote-left\"></i>";
+          echo "<i id=\"block-icon\" class=\"fa-solid fa-quote-left\"></i>";
+          break;
+        case "personsays":
+          echo "<img src=\"assets/images/profiles/".$tag["parameters"][0].".png\">";
+          echo "<div>";
           break;
       }
       echo iterateTags($content);
+      switch ($type) {
+        case "personsays":
+          echo "</div>";
+          break;
+      }
       echo "</$type>";
     }
   }
