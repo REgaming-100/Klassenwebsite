@@ -95,7 +95,6 @@ main {
     blockquote, codeblock {
       display: block;
       font-size: 20px;
-      font-style: italic;
       margin-bottom: 20px;
       padding: 20px;
       border-left: 5px solid;
@@ -115,9 +114,32 @@ main {
     }
   
     codeblock {
-      border-left-color: $accent-color;
-      font-family: 'Chivo Mono', monospace;
-      border-left-color: 5px solid $secondary-accent-color;
+      border-left-color: $secondary-accent-color;
+
+      * {
+        font-family: 'Chivo Mono', monospace;
+      }
+    }
+
+    personsays {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 15px;
+
+      img {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+      }
+
+      div {
+        min-height: 45px;
+        padding: 11.5px;
+        border-radius: 10px;
+        background-color: #eeeeee;
+        font-size: 17px;
+      }
     }
   }
 }
