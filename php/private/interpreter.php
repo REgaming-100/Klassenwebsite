@@ -3,10 +3,12 @@
 class Token {
   public $type;
   public $content;
+  public $parameters;
 
-  function __construct($type, $content = "") {
+  function __construct($type, $content = "", $parameters = []) {
     $this->type = $type;
     $this->content = $content;
+    $this->parameters = $parameters;
   }
 
   function addToContent($strToAdd) {
@@ -88,9 +90,10 @@ function parser($tokenArray) {
   return evaluateInTag("BODY", null, $tokenArray, $tokenIndex);
 }
 
-function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = []) {
+function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterArray = []) {
   $out = [
     "type" => $type,
+    "parameters" => $parameterArray,
     "content" => $content
   ];
 
@@ -153,8 +156,14 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = []) {
           echo "Error: Unrecognized tag type '".$token->content."'\n";
           exit();
       }
-
-      $out["content"][] = evaluateInTag($outType, $returnToken, $ta, $ti);
+      
+      if ($returnToken->type == "Tag" && $ta[$ti]->type == "Text" && $ta[$ti + 1]->type == "NewLine") {
+        $ti += 2;
+        $out["content"][] = evaluateInTag($outType, $returnToken, $ta, $ti, [], explode(" ", $ta[$ti - 2]->content));
+      }
+      else {
+        $out["content"][] = evaluateInTag($outType, $returnToken, $ta, $ti);
+      }
     }
     else if (str_starts_with($token->type, "Tag")) {
       $out["content"][] = evaluateInTag([
