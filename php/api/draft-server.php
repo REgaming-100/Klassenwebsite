@@ -137,8 +137,8 @@ function iterateTags($elementArray) {
     }
     else {
       $type = $tag["type"];
-      $content = $tag["content"];
       $parameters = isset($tag["parameters"]) ? $tag["parameters"] : null;
+      $content = $tag["content"];
 
       switch ($type) {
         case "h2":
@@ -156,6 +156,9 @@ function iterateTags($elementArray) {
         case "p":
           $body .= iterateTags($content)."\n\n";
           break;
+        case "a":
+          $body .= "[".$content[0]." | ".$parameters[0]."]";
+          break;
         case "b":
           $body .= "^".iterateTags($content)."^";
           break;
@@ -170,9 +173,16 @@ function iterateTags($elementArray) {
           break;
         case "blockquote":
           $body .= "&quote\n";
-          $body .= iterateTags($content);
-          if (substr($body, -2) == "\n\n") { $body = substr($body, 0, -1); }
+          $body .= trim(iterateTags($content))."\n";
           $body .= "&quote\n\n";
+          break;
+        case "personsays":
+          $body .= "&personsays\n";
+          $body .= trim(iterateTags($content))."\n";
+          $body .= "&personsays\n\n";
+          break;
+        case "img":
+          $body .= "&image ".$content[0]."\n\n";
           break;
       }
     }

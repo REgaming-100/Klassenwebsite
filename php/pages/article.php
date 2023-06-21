@@ -121,16 +121,27 @@ function iterateTags($elementArray) {
     }
     else {
       $type = $tag["type"];
-      $content = $tag["content"];
       $parameters = isset($tag["parameters"]) ? $tag["parameters"] : null;
+      $content = $tag["content"];
+
+      if ($type == "img") {
+        echo '<img src="assets/media/'.$content[0].'">';
+        continue;
+      }
+      if ($type == "a") {
+        echo '<a href="'.$parameters[0].'">';
+        echo $content[0];
+        echo "</a>";
+        continue;
+      }
 
       echo "<$type>";
       switch ($type) {
         case "blockquote":
-          echo "<i id=\"block-icon\" class=\"fa-solid fa-quote-left\"></i>";
+          echo '<i id="block-icon" class="fa-solid fa-quote-left"></i>';
           break;
         case "personsays":
-          echo "<img src=\"assets/images/profiles/".$tag["parameters"][0].".png\">";
+          echo '<img src="assets/images/profiles/'.$parameters[0].'.png">';
           echo "<div>";
           break;
       }
