@@ -65,8 +65,17 @@ function lexer($text) {
       case "^":
         newToken("TagCaret", $currentToken, $allTokens);
         break;
+      case "|":
+        newToken("Pipe", $currentToken, $allTokens);
+        break;
+      case "[":
+        newToken("BracketOpen", $currentToken, $allTokens);
+        break;
+      case "]":
+        newToken("BracketClose", $currentToken, $allTokens);
+        break;
       default:
-        if (!isset($currentToken) || in_array($currentToken->type, ["NewLine", "TagAsterisk", "TagUnderscore", "TagTilde", "TagCaret"])) {
+        if (!isset($currentToken) || in_array($currentToken->type, ["NewLine", "TagAsterisk", "TagUnderscore", "TagTilde", "TagCaret", "Pipe", "BracketOpen", "BracketClose"])) {
           newToken("Text", $currentToken, $allTokens);
         }
         $currentToken->addToContent($char);
@@ -172,6 +181,23 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
         "Tilde" => "s",
         "Caret" => "b"
       ][substr($token->type, 3)], new Token($token->type), $ta, $ti);
+    }
+    else if ($token->type == "BracketOpen") {
+      if ($ta[$ti]->type == "Text" && $ta[$ti + 1]->type == "Pipe" && $ta[$ti + 2]->type == "Text" && $ta[$ti + 3]->type == "BracketClose") {
+        $out["content"][] = [
+          "type" => "a",
+          "parameters" => [trim($ta[$ti + 2]->content)],
+          "content" => [trim($ta[$ti]->content)]
+        ];
+        $ti +=4;
+      }
+      else {
+        echo "Error: Unexpected token '".$token->content." (token #".$ti.")'\n";
+        exit();
+      }
+    }
+    else if ($token->type == "BracketClose") {
+      
     }
     else if ($token->type == "NewLine") {}
     else {
