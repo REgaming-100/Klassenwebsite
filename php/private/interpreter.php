@@ -36,7 +36,7 @@ function lexer($text) {
         if ($currentToken->type == "Tag") {
           newToken("Text", $currentToken, $allTokens);
         }
-        else if (str_starts_with($currentToken->type, "Tag")) {
+        else if (str_starts_with($currentToken->type, "Tag") || str_ends_with($currentToken->type, "Close")) {
           newToken("Text", $currentToken, $allTokens);
           $currentToken->addToContent($char);
         }
