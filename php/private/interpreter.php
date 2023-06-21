@@ -36,7 +36,7 @@ function lexer($text) {
         if ($currentToken->type == "Tag") {
           newToken("Text", $currentToken, $allTokens);
         }
-        else if (str_starts_with($currentToken->type, "Tag") || str_ends_with($currentToken->type, "Close")) {
+        else if (str_starts_with($currentToken->type, "Tag") || str_ends_with($currentToken->type, "Open") || str_ends_with($currentToken->type, "Close") || $currentToken->type == "Pipe") {
           newToken("Text", $currentToken, $allTokens);
           $currentToken->addToContent($char);
         }
@@ -108,6 +108,29 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
 
   while ($ti < count($ta)) {
     $token = $ta[$ti];
+    if ((isset($returnOn->type) ? $returnOn->type : "") == "Tag" && (isset($returnOn->content) ? $returnOn->content : "") == "table") {
+      $ti++;
+      $outIndex = isset($outIndex) ? $outIndex: 0;
+      $outIndexIndex = isset($outIndexIndex) ? $outIndexIndex: 0;
+      
+      if ($token->type == "Tag" && $token->content == "table") {
+        break;
+      }
+      else if ($token->type == "Pipe") {
+        $outIndexIndex += 1;
+        $out["content"][$outIndex][] = [];
+      }
+      else if ($token->type == "NewLine") {
+        $outIndex += 1;
+        $outIndexIndex = 0;
+        $out["content"][] = [[]];
+      }
+      else {
+        $out["content"][$outIndex][$outIndexIndex][] = $token;
+        var_dump($out);
+      }
+      continue;
+    }
 
     if ($returnOn == "DOUBLENL") {
       if ($token->type != "Text" && $ta[$ti + 1]->type != "Text") {
@@ -161,6 +184,11 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
           $outType = "blockquote";
           $returnToken = new Token("Tag", "quote");
           break;
+<<<<<<< HEAD
+        case "table":
+          $outType = "table";
+          $returnToken = new Token("Tag", "table");
+=======
         case "personsays":
           $outType = "personsays";
           $returnToken = new Token("personsays");
@@ -168,6 +196,7 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
         case "image":
           $outType = "img";
           $returnToken = new Token("NewLine");
+>>>>>>> 596729110e6002a656730b79535340d94c9e323b
           break;
         default:
           echo "Error: Unrecognized tag type '".$token->content."'\n";
@@ -176,11 +205,13 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
       
       if ($returnToken->type == "Tag" && $ta[$ti]->type == "Text" && $ta[$ti + 1]->type == "NewLine") {
         $ti += 2;
-        $out["content"][] = evaluateInTag($outType, $returnToken, $ta, $ti, [], explode(" ", $ta[$ti - 2]->content));
+        $result = evaluateInTag($outType, $returnToken, $ta, $ti, [], explode(" ", $ta[$ti - 2]->content));
       }
       else {
-        $out["content"][] = evaluateInTag($outType, $returnToken, $ta, $ti);
+        $result = evaluateInTag($outType, $returnToken, $ta, $ti);
       }
+      
+      $out["content"][] = $result;
     }
     else if (str_starts_with($token->type, "Tag")) {
       $out["content"][] = evaluateInTag([
@@ -204,12 +235,9 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
         exit();
       }
     }
-    else if ($token->type == "BracketClose") {
-      
-    }
     else if ($token->type == "NewLine") {}
     else {
-      echo "Error: Invalid token '".$token->content." (token #".$ti.")'\n";
+      echo "Error: Invalid token '".$returnOn." (token #".$ti.")'\n";
       exit();
     }
   }
