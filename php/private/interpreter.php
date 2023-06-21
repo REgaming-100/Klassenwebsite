@@ -161,6 +161,14 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
           $outType = "blockquote";
           $returnToken = new Token("Tag", "quote");
           break;
+        case "personsays":
+          $outType = "personsays";
+          $returnToken = new Token("personsays");
+          break;
+        case "image":
+          $outType = "img";
+          $returnToken = new Token("NewLine");
+          break;
         default:
           echo "Error: Unrecognized tag type '".$token->content."'\n";
           exit();

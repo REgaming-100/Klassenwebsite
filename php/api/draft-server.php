@@ -177,7 +177,7 @@ function iterateTags($elementArray) {
           $body .= "&quote\n\n";
           break;
         case "personsays":
-          $body .= "&personsays\n";
+          $body .= "&personsays ".$parameters[0]."\n";
           $body .= trim(iterateTags($content))."\n";
           $body .= "&personsays\n\n";
           break;
