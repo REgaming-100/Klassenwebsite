@@ -108,7 +108,7 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
 
   while ($ti < count($ta)) {
     $token = $ta[$ti];
-    if ((isset($returnOn->type) ? $returnOn->type : "") == "Tag" && (isset($returnOn->content) ? $returnOn->content : "") == "table") {
+    if ($returnOn == new Token("Tag", "table")) {
       $ti++;
       $outIndex = isset($outIndex) ? $outIndex: 0;
       $outIndexIndex = isset($outIndexIndex) ? $outIndexIndex: 0;
@@ -125,9 +125,11 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
         $outIndexIndex = 0;
         $out["content"][] = [[]];
       }
+      else if ($token->type == "Text") {
+        $out["content"][$outIndex][$outIndexIndex][] = $token->content;
+      }
       else {
         $out["content"][$outIndex][$outIndexIndex][] = $token;
-        var_dump($out);
       }
       continue;
     }
@@ -184,11 +186,10 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
           $outType = "blockquote";
           $returnToken = new Token("Tag", "quote");
           break;
-<<<<<<< HEAD
         case "table":
           $outType = "table";
           $returnToken = new Token("Tag", "table");
-=======
+          break;
         case "personsays":
           $outType = "personsays";
           $returnToken = new Token("personsays");
@@ -196,7 +197,6 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
         case "image":
           $outType = "img";
           $returnToken = new Token("NewLine");
->>>>>>> 596729110e6002a656730b79535340d94c9e323b
           break;
         default:
           echo "Error: Unrecognized tag type '".$token->content."'\n";
@@ -237,7 +237,7 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
     }
     else if ($token->type == "NewLine") {}
     else {
-      echo "Error: Invalid token '".$returnOn." (token #".$ti.")'\n";
+      echo "Error: Invalid token '".$token->type." (token #".$ti.")'\n";
       exit();
     }
   }
