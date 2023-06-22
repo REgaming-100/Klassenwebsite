@@ -17,12 +17,20 @@ document.addEventListener("DOMContentLoaded", function () {
         $(".articles").html("");
         $.each(json, function (idx, e) {
           date = new Date(e.infos.date * 1000);
+          if (e.image) {
+            $image = `
+              <div class="image">
+                <img src="assets/media/${e.image}">
+              </div>
+            `;
+          }
+          else {
+            $image = "";
+          }
           $(".articles").append(`
             <a href="article.php?topic=${e.id}" style="color: inherit;">
               <div class="article">
-                <div class="image">
-                  <img src="https://via.placeholder.com/150">
-                </div>
+                ${$image}
                 <div class="content">
                   <h2>${e.title}</h2>
                   <h3>${e.subtitle}</h3>
