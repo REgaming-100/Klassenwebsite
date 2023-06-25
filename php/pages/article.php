@@ -124,35 +124,46 @@ function iterateTags($elementArray) {
       $parameters = isset($tag["parameters"]) ? $tag["parameters"] : null;
       $content = $tag["content"];
 
-      if ($type == "img") {
-        echo '<img src="assets/media/'.$content[0].'">';
-        continue;
-      }
-      if ($type == "a") {
-        echo '<a href="'.$parameters[0].'">';
-        echo $content[0];
-        echo "</a>";
-        continue;
-      }
-
-      echo "<$type>";
       switch ($type) {
+        case "a":
+          echo '<a href="'.$parameters[0].'">';
+          break;
         case "blockquote":
-          echo '<i id="block-icon" class="fa-solid fa-quote-left"></i>';
+          echo '<blockquote><i id="block-icon" class="fa-solid fa-quote-left"></i>';
           break;
         case "personsays":
-          echo '<img src="assets/images/profiles/'.$parameters[0].'.png">';
-          echo "<div>";
+          echo '<personsays><img src="assets/images/profiles/'.$parameters[0].'.png"><div>';
           break;
+        case "table":
+          echo '<table class="'.implode(" ", $parameters).'">';
+          break;
+        case "img":
+          echo '<img src="assets/media/'.$content[0].'">';
+          continue 2;
+        default:
+          echo "<$type>";
       }
-      echo iterateTags($content);
+      echo $type == "table" ? iterateTable($content) : iterateTags($content);
       switch ($type) {
         case "personsays":
-          echo "</div>";
+          echo "</div></personsays>";
           break;
+        default:
+          echo "</$type>";
       }
-      echo "</$type>";
     }
+  }
+}
+
+function iterateTable($elementArray) {
+  foreach ($elementArray as $row) {
+    echo "<tr>";
+    foreach ($row as $element) {
+      echo "<td>";
+      ($element) ? iterateTags($element) : "";
+      echo "</td>";
+    }
+    echo "</tr>";
   }
 }
 

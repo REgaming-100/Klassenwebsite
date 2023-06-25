@@ -121,12 +121,25 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
         $out["content"][$outIndex][] = [];
       }
       else if ($token->type == "NewLine") {
-        $outIndex += 1;
-        $outIndexIndex = 0;
-        $out["content"][] = [[]];
+        if ($ta[$ti]->type != "Tag" && $ta[$ti]->content != "table") {
+          $outIndex += 1;
+          $outIndexIndex = 0;
+          $out["content"][] = [[]];
+        }
       }
       else if ($token->type == "Text") {
-        $out["content"][$outIndex][$outIndexIndex][] = $token->content;
+        if ($ta[$ti]->type == "Pipe" && $ta[$ti-2]->type == "Pipe") {
+          $out["content"][$outIndex][$outIndexIndex][] = trim($token->content);
+        }
+        else if ($ta[$ti]->type == "Pipe") {
+          $out["content"][$outIndex][$outIndexIndex][] = rtrim($token->content);
+        }
+        else if ($ta[$ti-2]->type == "Pipe") {
+          $out["content"][$outIndex][$outIndexIndex][] = ltrim($token->content);
+        }
+        else {
+          $out["content"][$outIndex][$outIndexIndex][] = $token->content;
+        }
       }
       else {
         $out["content"][$outIndex][$outIndexIndex][] = $token;
@@ -186,13 +199,13 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
           $outType = "blockquote";
           $returnToken = new Token("Tag", "quote");
           break;
-        case "table":
-          $outType = "table";
-          $returnToken = new Token("Tag", "table");
-          break;
         case "personsays":
           $outType = "personsays";
           $returnToken = new Token("personsays");
+          break;
+        case "table":
+          $outType = "table";
+          $returnToken = new Token("Tag", "table");
           break;
         case "image":
           $outType = "img";
@@ -242,6 +255,9 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
     }
   }
 
+  if (empty($out["parameters"])) {
+    unset($out["parameters"]);
+  }
   return $out;
 }
 

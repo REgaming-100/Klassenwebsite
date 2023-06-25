@@ -181,6 +181,11 @@ function iterateTags($elementArray) {
           $body .= trim(iterateTags($content))."\n";
           $body .= "&personsays\n\n";
           break;
+        case "table":
+          $body .= "&table ".implode(" ", $parameters)."\n";
+          $body .= iterateTable($content)."\n";
+          $body .= "&table\n\n";
+          break;
         case "img":
           $body .= "&image ".$content[0]."\n\n";
           break;
@@ -188,6 +193,20 @@ function iterateTags($elementArray) {
     }
   }
   return $body;
+}
+
+function iterateTable($table) {
+  $body = "";
+
+  foreach ($table as $row) {
+    foreach ($row as $element) {
+      $body .= iterateTags($element);
+      $body .= " | ";
+    }
+    $body = rtrim($body, " | ")."\n";
+  }
+
+  return rtrim($body, "\n");
 }
 
 ?>
