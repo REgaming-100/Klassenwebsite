@@ -6,7 +6,6 @@ if (!isset($_REQUEST["request-type"])) {
   exit();
 }
 
-
 if ($_REQUEST["request-type"] == "search") {
   if (!isset($_REQUEST["search-term"])) {
     echo "Error: No search term provided";
@@ -33,12 +32,15 @@ if ($_REQUEST["request-type"] == "search") {
     $newestVersion = max(glob($mainDir."/articles/$article/*.json"));
     $json = file_get_contents($newestVersion);
     $articleContent = json_decode($json, true);
+    $allImages = searchArray($articleContent, "type", "img");
+    $coverImage = isset($allImages[0]["content"]) ? $allImages[0]["content"] : "";
     array_push($jsons, [
       "id" => $article,
       "title" => $articleContent["title"],
       "subtitle" => $articleContent["subtitle"],
       "description" => $articleContent["description"],
-      "infos" => $articleContent["infos"]
+      "infos" => $articleContent["infos"],
+      "image" => $coverImage
     ]);
   }
 
@@ -71,6 +73,26 @@ if ($_REQUEST["request-type"] == "article-exists") {
 }
 else {
   echo "Error: Invalid request type";
+}
+
+function searchArray($array, $key, $value) {
+  $results = array();
+  search_r($array, $key, $value, $results);
+  return $results;
+}
+
+function search_r($array, $key, $value, &$results) {
+  if (!is_array($array)) {
+    return;
+  }
+
+  if (isset($array[$key]) && $array[$key] == $value) {
+    $results[] = $array;
+  }
+
+  foreach ($array as $subarray) {
+    search_r($subarray, $key, $value, $results);
+  }
 }
 
 ?>

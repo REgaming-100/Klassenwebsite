@@ -9,7 +9,7 @@ menu {
   padding: 15px;
   border-radius: 0 0 20px 20px;
   background-color: $interaction-color;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   z-index: 99;
   display: flex;
   align-items: center;
@@ -34,46 +34,6 @@ menu {
       }
     }
   }
-
-  /*#add {
-    position: relative;
-    display: inline-block;
-
-    button {
-      height: 30px;
-      padding: 0 8px;
-      font-size: 14px;
-      vertical-align: center;
-      color: #000000;
-      background-color: $main-color;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.2);
-
-      i {
-        padding-left: 6px;
-      }
-    }
-
-    #dropdown {
-      display: none;
-      position: absolute;
-      background-color: #f1f1f1;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1;
-
-      &.show {
-        display: block;
-      }
-
-      a {
-        display: block;
-        padding: 8px 6px;
-        text-decoration: none;
-      }
-    }
-  }*/
 }
 
 #popups {
@@ -103,7 +63,7 @@ menu {
     border-radius: 20px;
     background-color: #ffffff;
     padding: 25px;
-    padding-top: 0px;
+    padding-top: 0;
     z-index: 101;
     max-width: 550px;
     max-height: 80vh;
@@ -313,7 +273,8 @@ main {
   }
 
   #description-container {
-    margin: 0 20px 20px 20px;
+    margin: 20px;
+    margin-top: 0;
 
     div:first-child {
       text-transform: uppercase;
@@ -354,5 +315,162 @@ main {
     padding: 15px;
     font-size: 17px;
     font-family: 'Chivo Mono', monospace;
+    outline: none;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  menu {
+    height: 16vw;
+    padding: 3.75vw;
+    border-radius: 0 0 5vw 5vw;
+    box-shadow: 0 0.5vw 1.5vw rgba(0, 0, 0, 0.3);
+    gap: 5vw;
+  
+    item {
+      width: 7.5vw;
+      height: 7.5vw;
+  
+      i {
+        font-size: 5.75vw;
+      }
+    }
+  }
+
+  #popups {
+    .box {
+      border-radius: 5vw;
+      padding: 6.25vw;
+      padding-top: 0;
+      max-width: 90vw;
+      width: 90vw;
+      max-height: 80vh;
+
+      .close-popup {
+        top: 3vw;
+        margin-right: -2.25vw;
+        font-size: 5.75vw;
+      }
+
+      h1 {
+        margin-top: 2.5vw;
+        margin-bottom: 1.25vw;
+      }
+
+      p {
+        margin-bottom: 5vw;
+      }
+
+      .comparison {
+        gap: 2.5vw;
+        margin-bottom: 5vw;
+
+        .column {
+          flex-basis: 50%;
+          gap: 1.25vw;
+
+          h1, p {
+            border-radius: 1.25vw;
+            padding: 0.25vw 1.25vw;
+          }
+
+          h1 {
+            font-size: 5vw;
+          }
+
+          p {
+            font-size: 3.5vw;
+          }
+        }
+      }
+
+      fieldset {
+        border-radius: 2.5vw;
+        padding: 2.5vw;
+        margin-bottom: 2.5vw;
+
+        label {
+          gap: 2.5vw;
+          margin-bottom: 2.5vw;
+          font-size: 3.5vw;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          input[type="radio"] {
+            width: 4vw;
+            height: 4vw;
+            border-width: 0.5vw;
+            box-shadow: 0 0 0 1.5vw #eeeeee inset;
+            margin-right: 0.5vw;
+            top: 0.5vw;
+
+            &:checked {
+              box-shadow: 0 0 0 0.5vw #eeeeee inset;
+            }
+          }
+
+          b {
+            font-size: 4.25vw;
+          }
+
+          p {
+            margin-top: 0.75vw;
+          }
+        }
+      }
+
+      .buttons {
+        gap: 2.5vw;
+        margin-top: 5vw;
+
+        button {
+          height: 8.75;
+          border-radius: 2.5vw;
+          padding: 1.5vw 3.5vw;
+          font-size: 3.25vw;
+        }
+      }
+    }
+  }
+
+  main {
+    margin: 25vw auto 5vw;
+    padding: 0;
+    max-width: 90vw;
+    width: 90vw;
+  
+    #article-id {
+      font-size: 4vw;
+    }
+  
+    h1, subtitle {
+      &.editable {
+        text-decoration-thickness: 0.75vw;
+      }
+    }
+  
+    #description-container {
+      margin: 5vw;
+      margin-top: 0;
+  
+      div:first-child {
+        font-size: 3.5vw;
+        margin-bottom: 0.75vw;
+      }
+  
+      #description {
+        font-size: 4.25vw;
+        text-decoration-thickness: 0.5vw;
+      }
+    }
+  
+    #editor-content {
+      border-radius: 5vw;
+      border-width: 0.25vw;
+      padding: 3.75vw;
+      font-size: 4.25vw;
+    }
   }
 }

@@ -15,6 +15,7 @@
 
   .feature {
     display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 15px;
     background-color: #eeeeee;
@@ -33,6 +34,25 @@
 
     div p {
       margin-bottom: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  #features {
+    .feature {
+      flex-direction: column;
+      gap: 1.25vw;
+
+      i {
+        font-size: 8.75vw;
+      }
+  
+      div h3 {
+        font-size: 5.5vw;
+        text-align: center;
+        margin-bottom: 2.5vw;
+      }
     }
   }
 }

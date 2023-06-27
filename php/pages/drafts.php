@@ -2,9 +2,10 @@
 <html>
 <head>
   <title>Unsere Klasse &ndash; Die Klassenwebsite</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="stylesheet" type="text/css" href="/assets/css/drafts.css">
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
   <script src="/assets/js/general.js"></script>
   <script src="/assets/js/drafts.js"></script>
 </head>
@@ -19,7 +20,7 @@
     <a id="back-to-write" href="write.php"><i class="fa-solid fa-angle-left"></i>Zurück zur Startseite</a>
     <h1>Entwürfe</h1>
     <subtitle>Hilf bei der Fertigstellung!</subtitle>
-    <p style="padding: 0 50px;">Hier findest du eine Liste aller Entwürfe, die noch nicht veröffentlicht wurden. Fühl dich frei, sie zu bearbeiten und zu veröffentlichen.</p>
+    <p class="narrow-p">Hier findest du eine Liste aller Entwürfe, die noch nicht veröffentlicht wurden. Fühl dich frei, sie zu bearbeiten und zu veröffentlichen.</p>
     <div id="results">
 <?php
 
@@ -42,19 +43,21 @@ foreach (glob($mainDir."/articles/DRAFTS/.*") as $draft) {
     $deleteButtonClass = (time() - $lastEditTimestamp >= 259200) ? "" : " disabled";
 
     $drafts[] = "
-    <div class=\"result\">
-      <p id=\"article-id\"><code>$id</code></p>
-      <div id=\"title-subtitle\">
-        <h1>$title</h1>
-        <subtitle>$subtitle</subtitle>
+    <div class=\"result\" article-id=\"$id\">
+      <div id=\"infos\">
+        <p id=\"article-id\"><code>$id</code></p>
+        <div id=\"title-subtitle\">
+          <h1>$title</h1>
+          <subtitle>$subtitle</subtitle>
+        </div>
+        <div id=\"last-edit\">Zul. bearbeitet am $lastEditFormatted</div>
       </div>
-      <div id=\"last-edit\">Zul. bearbeitet am $lastEditFormatted</div>
       <div id=\"buttons\">
         <a class=\"edit-draft\"><i class=\"fa-solid fa-pen-to-square\"></i></a>
         <a class=\"delete-draft$deleteButtonClass\"><i class=\"fa-solid fa-trash-can\"></i></a>
       </div>
     </div>
-    ";
+  ";
 
     fclose($file);
   }

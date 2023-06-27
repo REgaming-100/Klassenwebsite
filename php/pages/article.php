@@ -45,9 +45,10 @@ if ($validArticleRequest) {
 <html>
 <head>
   <title>Unsere Klassenwebsite<?php if ($validArticleRequest) echo " &ndash; ".$articleData["title"] ?></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="stylesheet" type="text/css" href="/assets/css/article.css">
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
   <script src="/assets/js/general.js"></script>
   <script src="/assets/js/article.js"></script>
 </head>
@@ -117,42 +118,56 @@ foreach($articleData["properties"] as $property) {
 function iterateTags($elementArray) {
   foreach ($elementArray as $tag) {
     if (gettype($tag) == "string") {
-      echo str_replace("\n", "<br>", $tag);
+      $string = str_replace("\n", "<br>", $tag);
+      if ($string != "") {
+        echo $string;
+      }
     }
     else {
       $type = $tag["type"];
       $parameters = isset($tag["parameters"]) ? $tag["parameters"] : null;
       $content = $tag["content"];
 
-      if ($type == "img") {
-        echo '<img src="assets/media/'.$content[0].'">';
-        continue;
-      }
-      if ($type == "a") {
-        echo '<a href="'.$parameters[0].'">';
-        echo $content[0];
-        echo "</a>";
-        continue;
-      }
-
-      echo "<$type>";
       switch ($type) {
+        case "a":
+          echo '<a href="'.$parameters[0].'">';
+          break;
         case "blockquote":
-          echo '<i id="block-icon" class="fa-solid fa-quote-left"></i>';
+          echo '<blockquote><i id="block-icon" class="fa-solid fa-quote-left"></i>';
           break;
         case "personsays":
-          echo '<img src="assets/images/profiles/'.$parameters[0].'.png">';
-          echo "<div>";
+          echo '<personsays><img src="assets/images/profiles/'.$parameters[0].'.png"><div>';
           break;
+        case "table":
+          echo '<table class="'.implode(" ", $parameters).'">';
+          break;
+        case "img":
+          echo '<img src="assets/media/'.$content[0].'">';
+          continue 2;
+        default:
+          echo "<$type>";
       }
-      echo iterateTags($content);
+      echo $type == "table" ? iterateTable($content) : iterateTags($content);
       switch ($type) {
         case "personsays":
-          echo "</div>";
+          echo "</div></personsays>";
           break;
+        default:
+          echo "</$type>";
       }
-      echo "</$type>";
     }
+  }
+}
+
+function iterateTable($elementArray) {
+  foreach ($elementArray as $row) {
+    echo "<tr>";
+    foreach ($row as $element) {
+      echo "<td>";
+      ($element) ? iterateTags($element) : "";
+      echo "</td>";
+    }
+    echo "</tr>";
   }
 }
 

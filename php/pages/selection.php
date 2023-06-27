@@ -2,9 +2,10 @@
 <html>
 <head>
   <title>Unsere Klassenwebsite &ndash; Alle Artikel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="stylesheet" type="text/css" href="/assets/css/selection.css">
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
   <script src="/assets/js/general.js"></script>
   <script src="/assets/js/selection.js"></script>
 </head>

@@ -36,7 +36,7 @@ function lexer($text) {
         if ($currentToken->type == "Tag") {
           newToken("Text", $currentToken, $allTokens);
         }
-        else if (str_starts_with($currentToken->type, "Tag") || str_ends_with($currentToken->type, "Close")) {
+        else if (str_starts_with($currentToken->type, "Tag") || str_ends_with($currentToken->type, "Open") || str_ends_with($currentToken->type, "Close") || $currentToken->type == "Pipe") {
           newToken("Text", $currentToken, $allTokens);
           $currentToken->addToContent($char);
         }
@@ -108,6 +108,52 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
 
   while ($ti < count($ta)) {
     $token = $ta[$ti];
+    if ($returnOn == new Token("Tag", "table")) {
+      $ti++;
+      $outIndex = isset($outIndex) ? $outIndex: 0;
+      $outIndexIndex = isset($outIndexIndex) ? $outIndexIndex: 0;
+      
+      if ($token->type == "Tag" && $token->content == "table") {
+        break;
+      }
+      else if ($token->type == "Pipe") {
+        $outIndexIndex += 1;
+        $out["content"][$outIndex][] = [];
+      }
+      else if ($token->type == "NewLine") {
+        if ($ta[$ti]->type != "Tag" && $ta[$ti]->content != "table") {
+          $outIndex += 1;
+          $outIndexIndex = 0;
+          $out["content"][] = [[]];
+        }
+      }
+      else if ($token->type == "Text") {
+        if (ctype_space($token->content) || $token->content == "") {
+          continue;
+        }
+        else if ($ta[$ti]->type == "Pipe" && $ta[$ti-2]->type == "Pipe") {
+          $out["content"][$outIndex][$outIndexIndex][] = trim($token->content);
+        }
+        else if ($ta[$ti]->type == "Pipe") {
+          $out["content"][$outIndex][$outIndexIndex][] = rtrim($token->content);
+        }
+        else if ($ta[$ti-2]->type == "Pipe") {
+          $out["content"][$outIndex][$outIndexIndex][] = ltrim($token->content);
+        }
+        else {
+          $out["content"][$outIndex][$outIndexIndex][] = $token->content;
+        }
+      }
+      else if (str_starts_with($token->type, "Tag")) {
+        $out["content"][$outIndex][$outIndexIndex][] = evaluateInTag([
+          "Asterisk" => "i",
+          "Underscore" => "u",
+          "Tilde" => "s",
+          "Caret" => "b"
+        ][substr($token->type, 3)], new Token($token->type), $ta, $ti);
+      }
+      continue;
+    }
 
     if ($returnOn == "DOUBLENL") {
       if ($token->type != "Text" && $ta[$ti + 1]->type != "Text") {
@@ -165,6 +211,10 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
           $outType = "personsays";
           $returnToken = new Token("personsays");
           break;
+        case "table":
+          $outType = "table";
+          $returnToken = new Token("Tag", "table");
+          break;
         case "image":
           $outType = "img";
           $returnToken = new Token("NewLine");
@@ -176,11 +226,13 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
       
       if ($returnToken->type == "Tag" && $ta[$ti]->type == "Text" && $ta[$ti + 1]->type == "NewLine") {
         $ti += 2;
-        $out["content"][] = evaluateInTag($outType, $returnToken, $ta, $ti, [], explode(" ", $ta[$ti - 2]->content));
+        $result = evaluateInTag($outType, $returnToken, $ta, $ti, [], explode(" ", $ta[$ti - 2]->content));
       }
       else {
-        $out["content"][] = evaluateInTag($outType, $returnToken, $ta, $ti);
+        $result = evaluateInTag($outType, $returnToken, $ta, $ti);
       }
+      
+      $out["content"][] = $result;
     }
     else if (str_starts_with($token->type, "Tag")) {
       $out["content"][] = evaluateInTag([
@@ -204,16 +256,16 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
         exit();
       }
     }
-    else if ($token->type == "BracketClose") {
-      
-    }
     else if ($token->type == "NewLine") {}
     else {
-      echo "Error: Invalid token '".$token->content." (token #".$ti.")'\n";
+      echo "Error: Invalid token '".$token->type." (token #".$ti.")'\n";
       exit();
     }
   }
 
+  if (empty($out["parameters"])) {
+    unset($out["parameters"]);
+  }
   return $out;
 }
 
