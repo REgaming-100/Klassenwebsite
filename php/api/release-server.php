@@ -81,8 +81,8 @@ else if ($_REQUEST["request-type"] == "publish") {
   fwrite($keywordFile, $json);
   fclose($keywordFile);
 
-  //unlink($txtFilePath);
-  //unlink($metaFilePath);
+  unlink($txtFilePath);
+  unlink($metaFilePath);
 }
 else {
   echo "Error: Invalid request type";

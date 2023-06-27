@@ -128,7 +128,10 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
         }
       }
       else if ($token->type == "Text") {
-        if ($ta[$ti]->type == "Pipe" && $ta[$ti-2]->type == "Pipe") {
+        if (ctype_space($token->content) || $token->content == "") {
+          continue;
+        }
+        else if ($ta[$ti]->type == "Pipe" && $ta[$ti-2]->type == "Pipe") {
           $out["content"][$outIndex][$outIndexIndex][] = trim($token->content);
         }
         else if ($ta[$ti]->type == "Pipe") {
@@ -141,8 +144,13 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
           $out["content"][$outIndex][$outIndexIndex][] = $token->content;
         }
       }
-      else {
-        $out["content"][$outIndex][$outIndexIndex][] = $token;
+      else if (str_starts_with($token->type, "Tag")) {
+        $out["content"][$outIndex][$outIndexIndex][] = evaluateInTag([
+          "Asterisk" => "i",
+          "Underscore" => "u",
+          "Tilde" => "s",
+          "Caret" => "b"
+        ][substr($token->type, 3)], new Token($token->type), $ta, $ti);
       }
       continue;
     }

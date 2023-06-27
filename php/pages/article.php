@@ -117,7 +117,10 @@ foreach($articleData["properties"] as $property) {
 function iterateTags($elementArray) {
   foreach ($elementArray as $tag) {
     if (gettype($tag) == "string") {
-      echo str_replace("\n", "<br>", $tag);
+      $string = str_replace("\n", "<br>", $tag);
+      if ($string != "") {
+        echo $string;
+      }
     }
     else {
       $type = $tag["type"];

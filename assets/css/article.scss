@@ -18,7 +18,7 @@ main {
     color: #777777;
     box-shadow: 0px 0.5px 3px 0px rgba(0, 0, 0, 0.2);
     font-size: 16px;
-  
+
     p {
       font-size: inherit;
       margin-bottom: 0;
@@ -118,6 +118,57 @@ main {
 
       * {
         font-family: 'Chivo Mono', monospace;
+      }
+    }
+        
+    table {
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.2);
+
+      tr {
+        &:first-child {
+          td {
+            &:first-child {
+              border-top-left-radius: 10px;
+            }
+
+            &:last-child {
+              border-top-right-radius: 10px;
+            }
+          }
+        }
+
+        &:last-child {
+          td {
+            &:first-child {
+              border-bottom-left-radius: 10px;
+            }
+
+            &:last-child {
+              border-bottom-right-radius: 10px;
+            }
+          }
+        }
+        
+        &:hover {
+          background-color: #f4f4f4;
+        }
+
+        td {
+          padding: 12px;
+        }
+      }
+      
+      &.side tr td:first-child, &.top tr:first-child td {
+        background-color: $accent-color;
+        color: #ffffff;
+      }
+
+      &.side.top tr:not(:first-child) td:first-child {
+        filter: brightness(110%);
       }
     }
 
