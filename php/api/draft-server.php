@@ -176,6 +176,11 @@ function iterateTags($elementArray) {
           $body .= trim(iterateTags($content))."\n";
           $body .= "&quote\n\n";
           break;
+        case "codeblock":
+          $body .= "&code\n";
+          $body .= trim(iterateTags($content))."\n";
+          $body .= "&code\n\n";
+          break;
         case "personsays":
           $body .= "&personsays ".$parameters[0]."\n";
           $body .= trim(iterateTags($content))."\n";

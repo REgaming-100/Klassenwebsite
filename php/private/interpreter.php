@@ -219,6 +219,10 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
           $outType = "img";
           $returnToken = new Token("NewLine");
           break;
+        case "code":
+          $outType = "codeblock";
+          $returnToken = new Token("Tag", "code");
+          break;
         default:
           echo "Error: Unrecognized tag type '".$token->content."'\n";
           exit();

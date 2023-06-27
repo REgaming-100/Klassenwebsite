@@ -134,6 +134,9 @@ function iterateTags($elementArray) {
         case "blockquote":
           echo '<blockquote><i id="block-icon" class="fa-solid fa-quote-left"></i>';
           break;
+        case "codeblock":
+          echo "<codeblock>";
+          break;
         case "personsays":
           echo '<personsays><img src="assets/images/profiles/'.$parameters[0].'.png"><div>';
           break;
@@ -149,8 +152,7 @@ function iterateTags($elementArray) {
       echo $type == "table" ? iterateTable($content) : iterateTags($content);
       switch ($type) {
         case "personsays":
-          echo "</div></personsays>";
-          break;
+          echo "</div>";
         default:
           echo "</$type>";
       }
