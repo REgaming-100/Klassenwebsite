@@ -65,6 +65,9 @@ function lexer($text) {
       case "^":
         newToken("TagCaret", $currentToken, $allTokens);
         break;
+      case "`":
+        newToken("TagBacktick", $currentToken, $allTokens);
+        break;
       case "|":
         newToken("Pipe", $currentToken, $allTokens);
         break;
@@ -75,7 +78,7 @@ function lexer($text) {
         newToken("BracketClose", $currentToken, $allTokens);
         break;
       default:
-        if (!isset($currentToken) || in_array($currentToken->type, ["NewLine", "TagAsterisk", "TagUnderscore", "TagTilde", "TagCaret", "Pipe", "BracketOpen", "BracketClose"])) {
+        if (!isset($currentToken) || in_array($currentToken->type, ["NewLine", "TagAsterisk", "TagUnderscore", "TagTilde", "TagCaret", "TagBacktick", "Pipe", "BracketOpen", "BracketClose"])) {
           newToken("Text", $currentToken, $allTokens);
         }
         $currentToken->addToContent($char);
@@ -149,7 +152,8 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
           "Asterisk" => "i",
           "Underscore" => "u",
           "Tilde" => "s",
-          "Caret" => "b"
+          "Caret" => "b",
+          "Backtick" => "code"
         ][substr($token->type, 3)], new Token($token->type), $ta, $ti);
       }
       continue;
@@ -243,7 +247,8 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
         "Asterisk" => "i",
         "Underscore" => "u",
         "Tilde" => "s",
-        "Caret" => "b"
+        "Caret" => "b",
+        "Backtick" => "code"
       ][substr($token->type, 3)], new Token($token->type), $ta, $ti);
     }
     else if ($token->type == "BracketOpen") {
