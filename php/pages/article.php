@@ -149,8 +149,7 @@ function iterateTags($elementArray) {
       echo $type == "table" ? iterateTable($content) : iterateTags($content);
       switch ($type) {
         case "personsays":
-          echo "</div></personsays>";
-          break;
+          echo "</div>";
         default:
           echo "</$type>";
       }
