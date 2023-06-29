@@ -7,9 +7,10 @@ $show = isset($_GET["show"]) ? $_GET["show"] : null;
 <html>
 <head>
   <title>Unsere Klasse &ndash; Die Klassenwebsite</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="stylesheet" type="text/css" href="/assets/css/manual.css">
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
   <script src="/assets/js/general.js"></script>
   <script src="/assets/js/manual.js"></script>
 </head>
@@ -67,23 +68,24 @@ echo '</h2>';
 echo $currentShown ? '<section class="showable-section" id="format">' : '';
 ?>
       <h3>Text</h3>
-      <p>Um ganz normalen Text zu schreiben, schreibt man diesen einfach. Der Editor erkennt diesen als Absatz an. Für einen neuen Absatz Enter drücken.</p>
+      <p>Um ganz normalen Text zu schreiben, schreibt man diesen einfach. Der Editor erkennt diesen als Absatz an. Für einen neuen muss man einfach eine leere Zeile zwischen Texten lassen.</p>
+      <p>Man kann aber auch Modifikationen am Aussehen des Textes vornehmen. Diese sind je nach Stärke/Länge in drei Kategorien geteilt: Zwischenzeilige Tags (inline Tags), Vollzeilige Tags (single-line Tags) und Mehrzeilige Tags (multi-line Tags). Die Namen beschreiben sie zwar sehr genau, aber sie haben ein paar erwähnenswerte Unterschiede. Die zwischenzeiligen Tags nutzen statt dem Escape-Zeichen <code>&</code> ein eigenes Zeichen, wie zum Beispiel <code>^</code> für fett, <code>*</code> für kursiv oder <code>_</code> Unterstrichen</p>
       <h3>Überschriften</h3>
       <p id="headings">
         Der Editor bietet Überschriften von <testh1>ganz groß</testh1> bis <testh4>ganz klein</testh4>. Man muss nur den Escape-Character <code>&</code> und dahinter 1 bis 4 mal <code>#</code> eingeben, und man bekommt die gewünschte Größe. Beispiel:
       </p>
-      <code>
+      <codeblock>
         &# Erstes Kapitel<br>
         &## Der Anfang<br>
         Als unser mutiger Held auf ...
-      </code>
-      <h3 style="margin-top: 20px;">Zitate</h3>
-      <p>Mit den Keywords <code>&amp;quote</code> und <code>&amp;quote end</code> kann man ein Zitat makieren. Diese müssen aber allein in einer Zeile stehen und das Zitat dazwischen. Beispiel:</p>
-      <code>
+      </codeblock>
+      <h3>Zitate</h3>
+      <p>Mit dem Keyword <code>&amp;quote</code> kann man ein Zitat makieren. Diese müssen aber allein in einer Zeile stehen und das Zitat dazwischen. Beispiel:</p>
+      <codeblock>
         &amp;quote<br>
         Ich heiße Robert<br>
-        &amp;quote end
-      </code>
+        &amp;quote
+      </codeblock>
 <?php
 echo $currentShown ? '</section>' : '';
 ?>
