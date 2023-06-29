@@ -127,13 +127,10 @@ function iterateTags($elementArray) {
   
   foreach ($elementArray as $tag) {
     if (gettype($tag) == "string") {
-      $escapedDangers = str_replace("&", "\\&", $tag);
-      $escapedDangers = str_replace("*", "\\*", $escapedDangers);
-      $escapedDangers = str_replace("_", "\\_", $escapedDangers);
-      $escapedDangers = str_replace("~", "\\~", $escapedDangers);
-      $escapedDangers = str_replace("^", "\\^", $escapedDangers);
-      $escapedDangers = str_replace("`", "\\`", $escapedDangers);
-
+      $escapedDangers = $tag;
+      foreach (["&", "*", "_", "~", "^", "ˋ"] as $danger) {
+        $escapedDangers = str_replace($danger, "\\".$danger, $escapedDangers);
+      }
       $body .= $escapedDangers;
     }
     else {
@@ -186,9 +183,9 @@ function iterateTags($elementArray) {
           $body .= "&code\n\n";
           break;
         case "personsays":
-          $body .= "&personsays ".$parameters[0]."\n";
+          $body .= "&say ".$parameters[0]."\n";
           $body .= trim(iterateTags($content))."\n";
-          $body .= "&personsays\n\n";
+          $body .= "&say\n\n";
           break;
         case "table":
           $body .= "&table ".implode(" ", $parameters)."\n";
