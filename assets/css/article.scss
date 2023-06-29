@@ -231,6 +231,20 @@ main {
           font-family: 'Chivo Mono', monospace;
         }
       }
+
+      table {
+        margin-right: 0;
+        margin-left: 0;
+        width: 100%;
+        
+        tr {
+          td {
+            font-size: 4vw;
+            padding: 1.5vw;
+            text-align: center;
+          }
+        }
+      }
   
       personsays {
         flex-direction: column;
