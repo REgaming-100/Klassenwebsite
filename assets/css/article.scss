@@ -88,11 +88,12 @@ main {
   
     codeblock {
       border-left-color: $secondary-accent-color;
+      font-family: 'Chivo Mono', monospace;
       overflow: scroll;
       white-space: nowrap;
 
       * {
-        font-family: 'Chivo Mono', monospace;
+        font-family: inherit;
       }
     }
         
@@ -216,19 +217,6 @@ main {
   
         #block-icon {
           font-size: 8.75vw;
-        }
-      }
-  
-      blockquote {
-        font-style: italic;
-        border-left-color: $accent-color;
-      }
-    
-      codeblock {
-        border-left-color: $secondary-accent-color;
-  
-        * {
-          font-family: 'Chivo Mono', monospace;
         }
       }
 
