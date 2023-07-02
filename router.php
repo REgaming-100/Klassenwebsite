@@ -28,7 +28,7 @@ if (!(
   str_starts_with($requestURI, "/api/encode-key.php") ||
   // Everything that can be accessed without being logged in
   str_starts_with($requestURI, "/assets/fontawesome") ||
-  str_starts_with($requestURI, "/login.php") ||
+  str_starts_with($requestURI, "/login") ||
   $requestURI == "/assets/css/login.css" ||
   $requestURI == "/assets/images/login-background.png" ||
   $requestURI == "/assets/images/favicon.ico" ||
@@ -57,10 +57,17 @@ if (dirname($filePath) == $mainDir."/api") {
 if (strtolower(substr($filePath, -4)) == '.php' && dirname($filePath) == $mainDir) {
   $filePath = $mainDir."/php/pages/".basename($filePath);
 }
+$phpPages = glob($mainDir."/php/pages/*.php");
+foreach ($phpPages as $pageId => $page) {
+  $phpPages[$pageId] = basename($page, ".php");
+}
+if (in_array(basename($filePath), $phpPages) && dirname($filePath) == $mainDir) {
+  $filePath = $mainDir."/php/pages/".basename($filePath).".php";
+}
 
 if (rtrim($filePath, '/') == $mainDir) {
-  // requesting "" or "/"; serve index.php
-  include $mainDir."/php/pages/index.php";
+  // requesting "" or "/"; serve index
+  include $mainDir."/php/pages/index";
   http_response(200);
   exit();
 }
@@ -80,7 +87,7 @@ if (
 
 if ($filePath && is_dir($filePath)){
   // attempt to find an index file
-  foreach (['index.php', 'index.html'] as $indexFile){
+  foreach (['index', 'index.html'] as $indexFile){
     if (is_file(realpath($filePath . DIRECTORY_SEPARATOR . $indexFile))){
       http_response(200);
       include realpath($filePath . DIRECTORY_SEPARATOR . $indexFile);

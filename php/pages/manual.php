@@ -16,14 +16,14 @@ $show = isset($_GET["show"]) ? $_GET["show"] : null;
 </head>
 <body>
   <nav>
-    <a href="index.php"><img src="/assets/images/logo.png" alt="Logo" id="logo"></a>
-    <a href="selection.php">Artikel</a>
-    <a href="write.php">Schreib was!</a>
+    <a href="index"><img src="/assets/images/logo.png" alt="Logo" id="logo"></a>
+    <a href="selection">Artikel</a>
+    <a href="write">Schreib was!</a>
     <a id="logout"><i class="fa-solid fa-right-from-bracket"></i></a>
   </nav>
   <main>
     <h1>Anleitung zum Editor</h1>
-    <p>Mit dem <a href="editor.php">Editor</a> kann man Artikel in einer leicht verständlichen Sprache schreiben, ähnlich einer MarkDown-Datei. Diese wird hier komplett erklärt, damit du so schnell wie möglich Artikel effizient schreiben kannst.</p>
+    <p>Mit dem <a href="editor">Editor</a> kann man Artikel in einer leicht verständlichen Sprache schreiben, ähnlich einer MarkDown-Datei. Diese wird hier komplett erklärt, damit du so schnell wie möglich Artikel effizient schreiben kannst.</p>
     <div style="font-family: 'Chivo Mono', monospace; color: #dd0000; margin: 0 auto 20px; text-align: center; width: min(600px, 90%)">In der Beta-Version sind nur wenige Features verfügbar. Bald wird mehr hinzugefügt.</div>
     <h2
 <?php
@@ -52,7 +52,7 @@ echo $currentShown ? '<section class="showable-section" id="tools">' : '';
       <h3><i class="fa-solid fa-cloud-arrow-down"></i>Laden</h3>
       <p>Lade die Version, die aktuell auf den Server gespeichert ist, in den Editor. Das kann hilfreich sein, wenn man aus Versehen einen Abschnitt gelöscht hat und ihn wiederherstellen möchte.</p>
       <h3><i class="fa-solid fa-arrow-up-from-bracket"></i>Veröffentlichen</h3>
-      <p>Veröffentliche den Entwurf. Dadurch wird er in der Leseansicht lesbar und ggf. eine neue Version erstellt, um die alte zu ersetzen. Mehr dazu auf der <a href="write.php">Startseite</a>.</p>
+      <p>Veröffentliche den Entwurf. Dadurch wird er in der Leseansicht lesbar und ggf. eine neue Version erstellt, um die alte zu ersetzen. Mehr dazu auf der <a href="write">Startseite</a>.</p>
       <h3><i class="fa-solid fa-book"></i>Anleitung</h3>
       <p>Dieser Knopf bringt dich hierher. Benutze ihn immer, wenn du etwas Hilfe beim Editor brauchst.</p>
       <h3><i class="fa-solid fa-house"></i>Home</h3>

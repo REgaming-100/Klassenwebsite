@@ -10,9 +10,9 @@
 </head>
 <body>
   <nav>
-    <a href="index.php"><img src="/assets/images/logo.png" alt="Logo" id="logo"></a>
-    <a href="selection.php">Artikel</a>
-    <a href="write.php">Schreib was!</a>
+    <a href="index"><img src="/assets/images/logo.png" alt="Logo" id="logo"></a>
+    <a href="selection">Artikel</a>
+    <a href="write">Schreib was!</a>
     <a id="logout"><i class="fa-solid fa-right-from-bracket"></i></a>
   </nav>
   <main>

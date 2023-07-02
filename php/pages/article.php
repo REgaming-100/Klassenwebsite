@@ -53,9 +53,9 @@ if ($validArticleRequest) {
 </head>
 <body>
   <nav>
-    <a href="index.php"><img src="/assets/images/logo.png" alt="Logo" id="logo"></a>
-    <a href="selection.php">Artikel</a>
-    <a href="write.php">Schreib was!</a>
+    <a href="index"><img src="/assets/images/logo.png" alt="Logo" id="logo"></a>
+    <a href="selection">Artikel</a>
+    <a href="write">Schreib was!</a>
     <a id="logout"><i class="fa-solid fa-right-from-bracket"></i></a>
   </nav>
   <main>
@@ -207,8 +207,8 @@ if (!$topic) {
     <h2>Was tun?</h2>
     <p>Du kannst dir einen Artikel aus der Liste der Vorhandenen aussuchen. Wenn du eine Idee für ein Thema hast, schreib gerne darüber. Je mehr Themen wir haben, desto besser!</p>
     <div class="links">
-      <a href="selection.php">Artikelauswahl<i class="fa-solid fa-angle-right"></i></a>
-      <a href="write.php">Schreib was<i class="fa-solid fa-angle-right"></i></a>
+      <a href="selection">Artikelauswahl<i class="fa-solid fa-angle-right"></i></a>
+      <a href="write">Schreib was<i class="fa-solid fa-angle-right"></i></a>
     </div>
   </article>
 </div>
@@ -227,8 +227,8 @@ elseif (preg_match("/^[a-z0-9\-]*$/", $topic) == false) {
     <h2>Was tun?</h2>
     <p>Du kannst dir einen Artikel aus der Liste der Vorhandenen aussuchen. Wenn du eine Idee für ein Thema hast, schreib gerne darüber. Je mehr Themen wir haben, desto besser!</p>
     <div class="links">
-      <a href="selection.php">Artikelauswahl<i class="fa-solid fa-angle-right"></i></a>
-      <a href="write.php">Schreib was<i class="fa-solid fa-angle-right"></i></a>
+      <a href="selection">Artikelauswahl<i class="fa-solid fa-angle-right"></i></a>
+      <a href="write">Schreib was<i class="fa-solid fa-angle-right"></i></a>
     </div>
   </article>
 </div>
@@ -245,7 +245,7 @@ else {
     <h2>Was ist los?</h2>
     <p>Das Thema, das du mit <code>?topic</code> angegeben hast, wurde nicht gefunden.</p>
     <h2>Was tun?</h2>
-    <p>Du kannst gerne einen Text über "<?php echo $topic ?>" schreiben <a id="edit-article-select" topic="<?php echo $topic ?>"><i class="fa-solid fa-pen-to-square"></i></a> oder einen Artikel aus der Liste der Vorhandenen Artikel <a href="selection.php">aussuchen</a>.</p>
+    <p>Du kannst gerne einen Text über "<?php echo $topic ?>" schreiben <a id="edit-article-select" topic="<?php echo $topic ?>"><i class="fa-solid fa-pen-to-square"></i></a> oder einen Artikel aus der Liste der Vorhandenen Artikel <a href="selection">aussuchen</a>.</p>
   </article>
 </div>
 

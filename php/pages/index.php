@@ -11,9 +11,9 @@
 </head>
 <body>
   <nav>
-    <a href="index.php"><img src="/assets/images/logo.png" alt="Logo" id="logo"></a>
-    <a href="selection.php">Artikel</a>
-    <a href="write.php">Schreib was!</a>
+    <a href="index"><img src="/assets/images/logo.png" alt="Logo" id="logo"></a>
+    <a href="selection">Artikel</a>
+    <a href="write">Schreib was!</a>
     <a id="logout"><i class="fa-solid fa-right-from-bracket"></i></a>
   </nav>
   <main>
@@ -37,7 +37,7 @@
         <div>
           <h3>Editor</h3>
           <!-- Here's an easter egg… -->
-          <p>Du kannst selbst Artikel schreiben! Und zwar ganz unkom<span id="pilz">pilz</span>iert. Du musst weder programmieren können, noch JSON verstehen, denn der Editor funktioniert mit ganz normalem Text. Lernen, wie genau das funktioniert und anfangen zu schreiben kannst du bei <a href="write.php">Schreib was!</a></p>
+          <p>Du kannst selbst Artikel schreiben! Und zwar ganz unkom<span id="pilz">pilz</span>iert. Du musst weder programmieren können, noch JSON verstehen, denn der Editor funktioniert mit ganz normalem Text. Lernen, wie genau das funktioniert und anfangen zu schreiben kannst du bei <a href="write">Schreib was!</a></p>
         </div>
       </div>
     </section>

@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   $(".edit-draft").on("click", function () {
     id = $(this).parent().parent().children("p").children("code").html();
     localStorage.setItem("editor-article-id", id);
-    window.open("editor.php","_self");
+    window.open("editor","_self");
   });
 
   $(".delete-draft").on("click", function () {

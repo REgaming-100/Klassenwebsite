@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
             $image = "";
           }
           $(".articles").append(`
-            <a href="article.php?topic=${e.id}" style="color: inherit;">
+            <a href="article?topic=${e.id}" style="color: inherit;">
               <div class="article">
                 ${$image}
                 <div class="content">

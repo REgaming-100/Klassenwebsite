@@ -10,13 +10,13 @@
 </head>
 <body>
   <nav>
-    <a href="index.php"><img src="/assets/images/logo.png" alt="Logo" id="logo"></a>
-    <a href="selection.php">Artikel</a>
-    <a href="write.php">Schreib was!</a>
+    <a href="index"><img src="/assets/images/logo.png" alt="Logo" id="logo"></a>
+    <a href="selection">Artikel</a>
+    <a href="write">Schreib was!</a>
     <a id="logout"><i class="fa-solid fa-right-from-bracket"></i></a>
   </nav>
   <main>
-    <a id="back-to-write" href="write.php"><i class="fa-solid fa-angle-left"></i>Zurück zur Startseite</a>
+    <a id="back-to-write" href="write"><i class="fa-solid fa-angle-left"></i>Zurück zur Startseite</a>
     <h1>Entwürfe</h1>
     <subtitle>Hilf bei der Fertigstellung!</subtitle>
     <p style="padding: 0 50px;">Hier findest du eine Liste aller Entwürfe, die noch nicht veröffentlicht wurden. Fühl dich frei, sie zu bearbeiten und zu veröffentlichen.</p>

@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
     if (articleIdConfirmed) {
       localStorage.setItem("editor-article-id", $("#create-article-id-field").val());
-      window.open("editor.php","_self");
+      window.open("editor","_self");
     }
   });
 
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
         $(".edit-article-select").on("click", function () {
           id = $(this).prev().children("i").first().html();
           localStorage.setItem("editor-article-id", id);
-          window.open("editor.php","_self");
+          window.open("editor","_self");
         })
       }
     })

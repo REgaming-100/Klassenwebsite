@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
   // Function for manual and home
   $("menu item #manual").on("click", function () {
-    openManual = function () { window.open("manual.php","_self") };
+    openManual = function () { window.open("manual","_self") };
 
     if (changesSaved) {
       openManual();
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
   $("menu item #home").on("click", function () {
-    openHome = function () { window.open("write.php","_self") };
+    openHome = function () { window.open("write","_self") };
 
     if (changesSaved) {
       openHome();
@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     $("#just-normal-text .links #to-write").on("click", function () {
       localStorage.removeItem("editor-article-id");
-      window.open("write.php", "_self");
+      window.open("write", "_self");
     });
 
     $("menu item i:not(#home)").addClass("disabled").off("click");
@@ -257,7 +257,7 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.removeItem("editor-article-id");
             noArticleId();
             setTimeout(() => {
-              window.open(`article.php?topic=${articleId}`,"_self");
+              window.open(`article?topic=${articleId}`,"_self");
             }, 500);
           }
         );

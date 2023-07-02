@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
       type: "GET",
       url: "api/logout.php",
       success: function (response) {
-        window.open("login.php","_self");
+        window.open("login","_self");
       }
     });
   });

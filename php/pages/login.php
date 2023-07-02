@@ -23,7 +23,7 @@ if (isset($_POST["key"])) {
 }
 
 function redirect() {
-  $nextpage = isset($_GET["continue"]) ? $_GET["continue"] : "/index.php";
+  $nextpage = isset($_GET["continue"]) ? $_GET["continue"] : "/index";
   $attrIdx = 0;
   foreach ($_GET as $attr => $value) {
     if ($attr != "continue") {
@@ -43,7 +43,7 @@ function redirect() {
 </head>
 <body>
   <div class="login-container">
-    <form action="login.php<?php
+    <form action="login<?php
 $attrIdx = 0;
 foreach ($_GET as $attr => $value) {
   echo ($attrIdx == 0 ? "?" : "&") . "$attr=$value";

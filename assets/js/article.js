@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   $("#edit-article").on("click", function () {
     localStorage.setItem("editor-article-id", $(this).attr("topic"));
-    window.open("editor.php","_self");
+    window.open("editor","_self");
   });
 
   $("select").on("change", function () {
