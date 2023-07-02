@@ -48,72 +48,80 @@ if (!(
   exit();
 }
 
-$filePath = $mainDir."/".ltrim($requestURI, '/');
-$getAttributeRegEx = "/[\?\#].*/";
-$filePath = preg_replace($getAttributeRegEx, "" , $filePath);
+$filePath = $mainDir.$requestURI;
+$attributeRegEx = "/\?[^#\s]+=[^#\s]*(\&[^#\s]+=[^#\s]*)*|#[^?&\s]*/";
+$filePath = preg_replace($attributeRegEx, "" , $filePath);
+$filePath = rtrim($filePath, "/");
 if (dirname($filePath) == $mainDir."/api") {
   $filePath = $mainDir."/php/api/".basename($filePath);
 }
 if (strtolower(substr($filePath, -4)) == '.php' && dirname($filePath) == $mainDir) {
   $filePath = $mainDir."/php/pages/".basename($filePath);
 }
+if (preg_match("/^\/upload\/[0-9a-f]+\/?$/", str_replace($mainDir, "", $filePath))) {
+  require $mainDir."/php/private/uploads.php";
+  $explodedFilePath = explode("/", $filePath);
+  $uploadId = $explodedFilePath[count($explodedFilePath) - 1];
+  $path = $mainDir."/assets/uploads/$uploadId/".getContentFilename($uploadId);
+  header("Content-Type: ".mime_content_type($path));
+  echo file_get_contents($path);
+  httpResonse(200);
+  exit();
+}
+if (preg_match("/^\/upload\/[0-9a-f]+\/view\/?$/", str_replace($mainDir, "", $filePath))) {
+  $explodedFilePath = explode("/", $filePath);
+  $uploadId = $explodedFilePath[count($explodedFilePath) - 2];
+  require $mainDir."/php/private/upload-viewer.php";
+  httpResonse(200);
+  exit();
+}
 
 if (rtrim($filePath, '/') == $mainDir) {
   // requesting "" or "/"; serve index.php
-  include $mainDir."/php/pages/index.php";
-  http_response(200);
+  require $mainDir."/php/pages/index.php";
+  httpResonse(200);
   exit();
 }
 
 if (
   // specifically diallowed files or folders
   $filePath == $mainDir."/README.md" ||
-  $filePath == $mainDir."/compile" ||
-  $filePath == $mainDir."/com" ||
   $filePath == $mainDir."/requests.log" ||
-  $filePath == $mainDir."/articles" ||
   str_starts_with($filePath, $mainDir."/articles") ||
-  str_starts_with($filePath, $mainDir."/php/private")
+  str_starts_with($filePath, $mainDir."/php/private") ||
+  str_starts_with($filePath, $mainDir."/assets/uploads")
 ) {
-  http_response(403);
+  httpResonse(403);
 }
 
-if ($filePath && is_dir($filePath)){
-  // attempt to find an index file
-  foreach (['index.php', 'index.html'] as $indexFile){
-    if (is_file(realpath($filePath . DIRECTORY_SEPARATOR . $indexFile))){
-      http_response(200);
-      include realpath($filePath . DIRECTORY_SEPARATOR . $indexFile);
-    }
-  }
-}
-else if ($filePath && is_file($filePath)) {
-  // 1. check that file is not outside of this directory for security
-  // 2. check for circular reference to router.php
-  // 3. don't serve dotfiles
-  if (strpos($filePath, $mainDir . DIRECTORY_SEPARATOR) === 0 &&
-    $filePath != $mainDir . DIRECTORY_SEPARATOR . 'router.php' &&
+if ($filePath && is_file($filePath)) {
+  if (
+    // check that file is not outside of this directory for security
+    strpos($filePath, $mainDir."/") === 0 &&
+    // check for circular reference to router.php
+    $filePath != $mainDir."/router.php" &&
+    // don't serve dotfiles
     substr(basename($filePath), 0, 1) != '.'
   ) {
-    http_response(200);
+    httpResonse(200);
     if (strtolower(substr($filePath, -4)) == '.php') {
-      // php file; serve through interpreter
-      include $filePath;
+      // php file
+      require $filePath;
     }
     else {
-      // other file; serve from filesystem
+      // other file
       return false;
     }
   } else {
     // disallowed file
-    http_response(403);
+    httpResonse(403);
   }
 }
 else {
-  http_response(404);
+  httpResonse(404);
 }
 
-function http_response($code) {
+function httpResonse($code) {
   global $mainDir;
 
   switch ($code) {
@@ -133,6 +141,11 @@ function http_response($code) {
       exit();
       break;
   }
-} 
+}
+
+function returnIfSet(&$var, $pre = "", $post = "", &$isset = null) {
+  if (isset($isset)) { $isset = isset($var); }
+  return isset($var) ? $pre.$var.$post : null;
+}
 
 ?>

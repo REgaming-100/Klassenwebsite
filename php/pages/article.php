@@ -141,7 +141,7 @@ function iterateTags($elementArray) {
           echo '<table class="'.implode(" ", $parameters).'">';
           break;
         case "img":
-          echo '<img src="assets/media/'.$content[0].'">';
+          echo '<img src="/upload/'.$content[0].'">';
           continue 2;
         default:
           echo "<$type>";

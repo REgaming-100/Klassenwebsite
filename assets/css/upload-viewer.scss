@@ -1,0 +1,142 @@
+@import 'general';
+
+main {
+  padding: 0;
+  display: grid;
+  grid-template-areas:
+    "a a"
+    "b c";
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: auto auto;
+
+  #title {
+    grid-area: a;
+    padding: 15px;
+    background-color: #e9e9e9;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+
+    h1 {
+      margin: 0;
+      text-align: left;
+      font-size: 25px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #type {
+      font-size: 16px;
+      font-family: 'Source Sans Pro', sans-serif;
+      font-weight: bold;
+      color: #777777;
+      position: relative;
+      top: 1px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 4px;
+      text-transform: uppercase;
+    }
+  }
+
+  #content {
+    grid-area: b;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    #no-preview {
+      margin: 0;
+      text-align: center;
+      color: #888888;
+    }
+
+    .content {
+      max-height: unset;
+      max-width: 100%;
+
+      &.content-text {
+        font-family: 'Chivo Mono', monospace;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #eeeeee;
+        color: #000000;
+  
+        &.content-code {
+          background-color: #444444;
+          color: #ffffff;
+          overflow: scroll;
+          white-space: pre;
+        }
+      }
+  
+      &.content-img {
+        display: block;
+        height: auto;
+        border-radius: 0;
+      }
+  
+      &.content-pdf {
+        width: 100%;
+        min-height: 909px;
+      }
+    }
+  }
+
+  #sidebar {
+    grid-area: c;
+    padding: 15px;
+    background-color: #f0f0f0;
+
+    #download {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      background-color: $interaction-color;
+      color: #ffffff;
+      border-radius: 8px;
+      padding: 6px;
+      font-size: 18px;
+    }
+
+    .category-label {
+      text-transform: uppercase;
+      font-size: 14px;
+      margin-top: 10px;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #888888;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    .category {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+
+      .simple-info {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+
+        i {
+          width: 21px;
+        }
+      }
+    }
+  }
+}
