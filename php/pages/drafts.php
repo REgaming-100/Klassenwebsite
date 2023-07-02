@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Unsere Klasse &ndash; Die Klassenwebsite</title>
+  <meta name="format-detection" content="telephone=no">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="stylesheet" type="text/css" href="/assets/css/drafts.css">
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

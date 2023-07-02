@@ -45,6 +45,7 @@ if ($validArticleRequest) {
 <html>
 <head>
   <title>Unsere Klassenwebsite<?php if ($validArticleRequest) echo " &ndash; ".$articleData["title"] ?></title>
+  <meta name="format-detection" content="telephone=no">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="stylesheet" type="text/css" href="/assets/css/article.css">
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
