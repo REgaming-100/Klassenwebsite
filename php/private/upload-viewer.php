@@ -20,6 +20,8 @@ $iconName = iconName($mimeType, $fileData["filenames"]["extension"], returnIfSet
   <meta name="format-detection" content="telephone=no">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="stylesheet" type="text/css" href="/assets/css/upload-viewer.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="/assets/js/general.js"></script>
 </head>
 <body>
   <nav>
