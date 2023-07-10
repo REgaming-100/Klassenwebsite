@@ -10,13 +10,13 @@ $fileSizeUnit = $fileSizeArray["multiplier"];
 
 $mimeType = $fileData["meta"]["type"];
 
-$iconName = iconName($mimeType, $fileData["filenames"]["extension"], returnIfSet($fileData["data"]["code"]));
+$iconName = groupUploadType($mimeType, $fileData["filenames"]["extension"], returnIfSet($fileData["data"]["code"]))["iconName"];
 
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Unsere Klassenwebsite &mdash; <?php echo $fileData["display"]["title"] ?></title>
+  <title>Unsere Klassenwebsite &ndash; <?php echo $fileData["display"]["title"] ?></title>
   <meta name="format-detection" content="telephone=no">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="stylesheet" type="text/css" href="/assets/css/upload-viewer.css">

@@ -33,22 +33,26 @@ function shortenFileSize($bytes) {
   return ["size" => $fileSize, "multiplier" => $fileSizeUnit];
 }
 
-function iconName($mimeType, $fileExtension, $isCode) {
+function groupUploadType($mimeType, $fileExtension, $isCode) {
   switch ($mimeType) {
     case "application/msword":
     case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
       $iconName = "file-word";
+      $uploadGroup = "document";
       break;
     case "application/vnd.ms-excel":
     case "application/vnd.ms-excel":
       $iconName = "file-excel";
+      $uploadGroup = "document";
       break;
     case "application/vnd.ms-powerpoint":
     case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
       $iconName = "file-powerpoint";
+      $uploadGroup = "document";
       break;
     case "application/pdf":
       $iconName = "file-pdf";
+      $uploadGroup = "document";
       break;
     case "application/x-archive":
     case "application/x-compressed":
@@ -60,6 +64,7 @@ function iconName($mimeType, $fileExtension, $isCode) {
     case "application/gzip":
     case "multipart/x-gzip":
       $iconName = "file-zipper";
+      $uploadGroup = "other";
       break;
     case "text/x-java":
     case "text/x-java-source":
@@ -68,17 +73,20 @@ function iconName($mimeType, $fileExtension, $isCode) {
     case "application/java-byte-code":
     case "application/x-java-class":
       $iconName = "mug-hot";
+      $uploadGroup = ["text", "code"];
       break;
   }
 
   if (!isset($iconName)) {
     if (in_array($fileExtension, ["java", "class", "jar"])) {
       $iconName = "mug-hot";
+      $uploadGroup = ["text", "code"];
     }
   }
 
   if (!isset($iconName) && explode("/", $mimeType)[0] == "text" && $isCode) {
     $iconName = "code";
+    $uploadGroup = ["text", "code"];
   }
 
   if (!isset($iconName)) {
@@ -91,9 +99,18 @@ function iconName($mimeType, $fileExtension, $isCode) {
       "text" => "file-lines",
       "video" => "film"
     ][explode("/", $mimeType)[0]];
+    $uploadGroup = [
+      "application" => "other",
+      "audio" => "audio",
+      "font" => "other",
+      "image" => "image",
+      "model" => "other",
+      "text" => "text",
+      "video" => "video"
+    ][explode("/", $mimeType)[0]];
   }
 
-  return $iconName;
+  return ["iconName" => $iconName, "group" => $uploadGroup];
 }
 
 function reverseGeocode($latitude, $longitude) {
@@ -139,6 +156,7 @@ function getPreview($id, $fixed = false) {
   global $mainDir;
 
   $mimeType = getUploadData($id)["meta"]["type"];
+  $extension = getUploadData($id)["filenames"]["extension"];
 
   $return = "";
   if (explode("/", $mimeType)[0] == "text") {
@@ -147,7 +165,16 @@ function getPreview($id, $fixed = false) {
     $return .= "</div>";
   }
   else if (explode("/", $mimeType)[0] == "image") {
-   $return .= '<img class="content content-img" src="/upload/'.$id.'">';
+    $return .= '<img class="content content-img" src="/upload/'.$id.'">';
+  }
+  else if (explode("/", $mimeType)[0] == "video") {
+    if ($fixed) {
+      $return .= '';
+    }
+    else {
+      $return .= '<video controls class="content content-video" src="/upload/'.$id.'" type="'.$mimeType.'"></video>';
+    }
+    
   }
   else if ($mimeType == "application/pdf") {
     if ($fixed) {
@@ -158,7 +185,7 @@ function getPreview($id, $fixed = false) {
     }
   }
   else {
-    $return .= '<p id="no-preview">'.$fileData["filenames"]["extension"].'-Datei<br>Keine Vorschau verfügbar.</p>';
+    $return .= '<p id="no-preview">'.$extension.'-Datei<br>Keine Vorschau verfügbar.</p>';
   }
 
   return $return;

@@ -63,8 +63,9 @@ if (preg_match("/^\/upload\/[0-9a-f]+\/?$/", str_replace($mainDir, "", $filePath
   $explodedFilePath = explode("/", $filePath);
   $uploadId = $explodedFilePath[count($explodedFilePath) - 1];
   $path = $mainDir."/assets/uploads/$uploadId/".getContentFilename($uploadId);
+  header("Content-Disposition: attachment; filename=".getContentFilename($uploadId));
   header("Content-Type: ".mime_content_type($path));
-  echo file_get_contents($path);
+  readfile($path);
   httpResonse(200);
   exit();
 }
@@ -72,6 +73,12 @@ if (preg_match("/^\/upload\/[0-9a-f]+\/view\/?$/", str_replace($mainDir, "", $fi
   $explodedFilePath = explode("/", $filePath);
   $uploadId = $explodedFilePath[count($explodedFilePath) - 2];
   require $mainDir."/php/private/upload-viewer.php";
+  httpResonse(200);
+  exit();
+}
+
+if (preg_match("/^\/uploads\/?$/", str_replace($mainDir, "", $filePath))) {
+  require $mainDir."/php/private/upload-overview.php";
   httpResonse(200);
   exit();
 }
