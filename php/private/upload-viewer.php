@@ -42,6 +42,7 @@ $iconName = groupUploadType($mimeType, $fileData["filenames"]["extension"], retu
 <?php echo getPreview($uploadId) ?>
     </div>
     <div id="sidebar">
+      <div id="upload-id">#<?php echo $uploadId ?></div>
       <a id="download" href="/upload/<?php echo $uploadId ?>" download>
         <i class="fa-solid fa-download"></i>
         <div>Download</div>
