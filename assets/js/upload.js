@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
       file = uploadedFile;
 
       fd = new FormData();
+      fd.append("request-type", "upload");
       fd.append("title", $("#title").val());
       fd.append("description", $("#description").html());
       fd.append("file", file);

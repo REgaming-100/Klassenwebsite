@@ -191,4 +191,38 @@ function getPreview($id, $fixed = false) {
   return $return;
 }
 
+function getUploadOverview($links = false) {
+  $allIds = getAllUploadIds();
+  $return = "";
+
+  foreach ($allIds as $uploadId) {
+    $data = getUploadData($uploadId);
+    $meta = $data["meta"];
+    $uploadTime = date("d.m.Y", $meta["upload"]);
+    $fileSizeArray = shortenFileSize($meta["size"]);
+    $fileSize = round($fileSizeArray["size"], 1) . " " . $fileSizeArray["multiplier"] . "B";
+  
+    $group = groupUploadType($meta["type"], $data["filenames"]["extension"], returnIfSet($data["data"]["code"]))["group"];
+
+    $return .= '<'.($links ? "a" : "div").' class="upload';
+    if (is_array($group)) {
+      foreach ($group as $x) {
+        $return .= " type-$x";
+      }
+    }
+    else {
+      $return .= " type-$group";
+    }
+    $return .= '"'.($links ? ' href="/upload/'.$uploadId.'/view"':"").' upload-id="'.$uploadId.'">';
+    $return .=   '<div id="preview">'.getPreview($uploadId, true).'</div>';
+    $return .=   '<div id="details">';
+    $return .=     '<h1>'.$data["display"]["title"].'</h1>';
+    $return .=     '<div id="infos">'.$meta["author"]." • ".$uploadTime." • ".$fileSize.'</div>';
+    $return .=   '</div>';
+    $return .= '</'.($links ? "a" : "div").'>';
+  }
+
+  return $return;
+}
+
 ?>

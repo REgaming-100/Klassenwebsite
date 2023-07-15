@@ -50,25 +50,7 @@ $allIds = getAllUploadIds();
         </div>
       </div>
     </div>
-    <div id="results">
-<?php foreach ($allIds as $uploadId) {
-  $data = getUploadData($uploadId);
-  $meta = $data["meta"];
-  $uploadTime = date("d.m.Y", $meta["upload"]);
-  $fileSizeArray = shortenFileSize($meta["size"]);
-  $fileSize = round($fileSizeArray["size"], 1) . " " . $fileSizeArray["multiplier"] . "B";
-
-  $group = groupUploadType($meta["type"], $data["filenames"]["extension"], returnIfSet($data["data"]["code"]))["group"];
-?>
-    <a class="upload<?php if (is_array($group)) { foreach ($group as $x) { echo " type-$x"; }} else { echo " type-$group"; } ?>" href="/upload/<?php echo $uploadId ?>/view">
-      <div id="preview"><?php echo getPreview($uploadId, true) ?></div>
-      <div id="details">
-        <h1><?php echo $data["display"]["title"] ?></h1>
-        <div id="infos"><?php echo $meta["author"]." • ".$uploadTime." • ".$fileSize ?></div>
-      </div>
-    </a>
-<?php } ?>
-    </div>
+    <div id="results"><?php echo getUploadOverview(true); ?></div>
   </main>
 </body>
 </html>
