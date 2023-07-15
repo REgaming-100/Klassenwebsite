@@ -211,10 +211,6 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
           $outType = "blockquote";
           $returnToken = new Token("Tag", "quote");
           break;
-        case "personsays":
-          $outType = "personsays";
-          $returnToken = new Token("personsays");
-          break;
         case "table":
           $outType = "table";
           $returnToken = new Token("Tag", "table");
@@ -226,6 +222,10 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
         case "code":
           $outType = "codeblock";
           $returnToken = new Token("Tag", "code");
+          break;
+        case "say":
+          $outType = "personsays";
+          $returnToken = new Token("Tag", "say");
           break;
         default:
           echo "Error: Unrecognized tag type '".$token->content."'\n";
@@ -259,6 +259,14 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
           "content" => [trim($ta[$ti]->content)]
         ];
         $ti +=4;
+      }
+      else if ($ta[$ti]->type == "Text" && $ta[$ti + 1]->type == "BracketClose") {
+        $out["content"][] = [
+          "type" => "a",
+          "parameters" => [trim($ta[$ti]->content)],
+          "content" => [preg_replace("/^https?:\/\//", "", trim($ta[$ti]->content))]
+        ];
+        $ti +=2;
       }
       else {
         echo "Error: Unexpected token '".$token->content." (token #".$ti.")'\n";
