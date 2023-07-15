@@ -1,0 +1,163 @@
+@import 'general';
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  #title {
+    display: block;
+    width: 100%;
+    padding: 4px 9px;
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 2px solid #dddddd;
+    margin-bottom: 10px;
+    outline: none;
+
+    &:focus {
+      border-color: #aaaaaa;
+    }
+  }
+
+  #description {
+    display: block;
+    width: 100%;
+    padding: 4px 9px;
+    resize: none;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 2px solid #dddddd;
+    margin-bottom: 10px;
+    outline: none;
+
+    &:focus {
+      border-color: #aaaaaa;
+    }
+  }
+
+  #upload-button {
+    margin: 30px 0;
+    width: 100%;
+    padding: 30px;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+    display: flex;
+
+    &.dragging {
+      border: 2px dashed $interaction-color;
+    }
+
+    &.placeholder {
+      cursor: pointer;
+      flex-direction: column;
+      align-items: center;
+
+      h1 {
+        font-size: 32px;
+        color: #444444;
+
+        i {
+          margin-right: 10px;
+        }
+      }
+
+      div {
+        font-size: 16px;
+        color: #666666;
+      }
+    }
+
+    &.preview {
+      padding: 20px;
+      position: relative;
+      flex-direction: row;
+      align-items: center;
+      gap: 20px;
+
+      i {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 22px;
+        cursor: pointer;
+      }
+
+      #preview {
+        height: 100%;
+        max-width: 20%;
+        border-radius: 10px;
+      }
+
+      #text {
+        h1 {
+          font-size: 30px;
+          text-align: left;
+        }
+
+        #infos {
+          font-size: 16px;
+          color: #888888;
+        }
+      }
+    }
+  }
+
+  p {
+    margin: 0;
+    color: #444444;
+    font-size: 15px;
+    text-align: center;
+    max-width: 80%;
+  }
+
+  #stay-check {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      border-radius: 30%;
+      width: 16px;
+      height: 16px;
+      border: 2px solid $interaction-color;
+      background-color: #ffffff;
+      transition: 0.1s background-color linear;
+
+      &:checked {
+        background-color: $interaction-color;
+
+        &::before {
+          color: #ffffff;
+          font-family: "Font Awesome 6 Free";
+          content: "\f00c";
+          position: relative;
+          bottom: 1px;
+          left: 1px;
+        }
+      }
+    }
+  }
+
+  #submit {
+    margin-top: 15px;
+    padding: 6px 10px;
+    border: none;
+    background-color: $interaction-color;
+    color: #ffffff;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 1px 5px -2px rgba(0, 0, 0, 0.3);
+
+    &.disabled {
+      cursor: not-allowed;
+      filter: saturate(0%);
+    }
+  }
+}
