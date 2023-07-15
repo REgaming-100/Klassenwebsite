@@ -30,6 +30,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function upload() {
     if (checkIfSendable()) {
+      $("#submit").html(`<i class="fa-solid fa-spinner fa-spin"></i>`);
+      failId = setTimeout(() => {
+        $("#submit").html(`<i class="fa-solid fa-xmark"></i>`);
+        setTimeout(() => $("#submit i").html("Hochladen"), 2000);
+      }, 5000);
+
       file = uploadedFile;
 
       fd = new FormData();
@@ -44,6 +50,12 @@ document.addEventListener("DOMContentLoaded", function () {
         contentType: false,
         processData: false,
         success: function (uploadId) {
+          clearTimeout(failId);
+          $("#submit").html(`<i class="fa-solid fa-check"></i>`);
+          setTimeout(() => {
+            $("#submit").html("Hochladen");
+          }, 2000);
+
           if ($("#stay:checked").length == 0) {
             window.open(`/upload/${uploadId}/view`, "_self");
           }

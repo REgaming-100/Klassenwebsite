@@ -17,10 +17,11 @@
     <a id="logout"><i class="fa-solid fa-right-from-bracket"></i></a>
   </nav>
   <main>
+    <h1>Lade etwas hoch</h1>
+    <p>Titel und Datei müssen vorhanden sein. Die Beschreibung ist optional. Zurzeit kann man nur eine Datei gleichzeitig hochladen.</p>
     <input type="text" id="title" placeholder="Titel">
     <textarea id="description" placeholder="Beschreibung"></textarea>
     <input type="file" id="upload-file" hidden>
-    <p>Titel und Datei müssen vorhanden sein. Die Beschreibung ist optional. Zurzeit kann man nur eine Datei gleichzeitig hochladen.</p>
     <label id="upload-button"></label>
     <div id="stay-check">
       <input type="checkbox" id="stay">
