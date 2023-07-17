@@ -127,13 +127,10 @@ function iterateTags($elementArray) {
   
   foreach ($elementArray as $tag) {
     if (gettype($tag) == "string") {
-      $escapedDangers = str_replace("&", "\\&", $tag);
-      $escapedDangers = str_replace("*", "\\*", $escapedDangers);
-      $escapedDangers = str_replace("_", "\\_", $escapedDangers);
-      $escapedDangers = str_replace("~", "\\~", $escapedDangers);
-      $escapedDangers = str_replace("^", "\\^", $escapedDangers);
-      $escapedDangers = str_replace("`", "\\`", $escapedDangers);
-
+      $escapedDangers = $tag;
+      foreach (["&", "*", "_", "~", "^", "ˋ"] as $danger) {
+        $escapedDangers = str_replace($danger, "\\".$danger, $escapedDangers);
+      }
       $body .= $escapedDangers;
     }
     else {
@@ -186,17 +183,20 @@ function iterateTags($elementArray) {
           $body .= "&code\n\n";
           break;
         case "personsays":
-          $body .= "&personsays ".$parameters[0]."\n";
+          $body .= "&say ".$parameters[0]."\n";
           $body .= trim(iterateTags($content))."\n";
-          $body .= "&personsays\n\n";
+          $body .= "&say\n\n";
           break;
         case "table":
           $body .= "&table ".implode(" ", $parameters)."\n";
           $body .= iterateTable($content)."\n";
           $body .= "&table\n\n";
           break;
-        case "img":
-          $body .= "&image ".$content[0]."\n\n";
+        case "file":
+          if (preg_match("/&file [0-9a-f]+\n\n$/", $body)) {
+            $body = substr($body, 0, -1);
+          }
+          $body .= "&file ".$content[0]."\n\n";
           break;
       }
     }

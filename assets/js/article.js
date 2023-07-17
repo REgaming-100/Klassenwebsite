@@ -9,4 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
     window.open("?topic=" + $(this).attr("topic") + "&version=" + $(this).find("option:selected").attr('value'), "_self");
   });
 
+  $(".file-error #open").on("click", function () {
+    window.open("/upload/" + $(this).parent().attr("upload-id") + "/view", "_blank");
+  });
+
 });

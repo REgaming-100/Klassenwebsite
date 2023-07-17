@@ -3,6 +3,7 @@
 <head>
   <title>Unsere Klasse &ndash; Die Klassenwebsite</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="stylesheet" type="text/css" href="/assets/css/editor.css">
   <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -23,21 +24,22 @@
         <a>quote</a>
       </div>
     </div>-->
+    <item title="Dateien"><i class="fa-solid fa-photo-film" id="files"></i></item>
     <item title="Anleitung"><i class="fa-solid fa-book" id="manual"></i></item>
     <item title="Startseite"><i class="fa-solid fa-house" id="home"></i></item>
   </menu>
   <div id="popups">
     <div id="darkener"></div>
-    <div class="box" id="box-save-changes">
+    <div class="box" id="box-save-changes" style="z-index: 103;">
       <i class="fa-solid fa-xmark close-popup"></i>
       <h1>Speichern?</h1>
-      <p>"Du hast ungespeicherte Änderungen. Möchtest du speichern, bevor du das tust?</p>
+      <p>Du hast ungespeicherte Änderungen. Möchtest du speichern, bevor du das tust?</p>
       <div class="buttons">
         <button class="danger" id="dont-save">Nicht speichern</button>
         <button class="action" id="save">Speichern & Weiter</button>
       </div>
     </div>
-    <div class="box" id="box-publish">
+    <div class="box" id="box-publish" style="z-index: 102;">
       <i class="fa-solid fa-xmark close-popup"></i>
       <h1>Veröffentlichen</h1>
       <p>Veröffentliche diesen Artikel, damit er für alle lesbar wird! Diese Version wird automatisch bei der Suche angezeigt und ersetzt damit die alte, falls vorhanden. Ältere Versionen kann man in der Versionsansicht des Artikels anschauen.</p>
@@ -75,6 +77,48 @@
       <div class="buttons">
         <button id="cancel">Abbrechen</button>
         <button class="action disabled" id="publish-final">Veröffentlichen!</button>
+      </div>
+    </div>
+    <div class="box" id="box-files" style="z-index: 101;">
+      <i class="fa-solid fa-xmark close-popup"></i>
+      <h1>Wähle eine Datei aus</h1>
+      <div id="selection">
+        <div id="top-bar">
+          <input type="text" id="search" placeholder="Dateien suchen…">
+          <button id="upload-new">
+            <i class="fa-solid fa-plus"></i>Hochladen
+          </button>
+        </div>
+        <div id="filters">
+          <div upload-filter="image">
+            <i class="fa-solid fa-image"></i>Bilder
+          </div>
+          <div upload-filter="video">
+            <i class="fa-solid fa-film"></i>Videos
+          </div>
+          <div upload-filter="audio">
+            <i class="fa-solid fa-volume-high"></i>Audio
+          </div>
+          <div upload-filter="document">
+            <i class="fa-solid fa-file"></i>Dokumente
+          </div>
+          <div upload-filter="text">
+            <i class="fa-solid fa-file-lines"></i>Text
+          </div>
+          <div upload-filter="code">
+            <i class="fa-solid fa-code"></i>Code
+          </div>
+          <div upload-filter="other">
+            <i class="fa-solid fa-ellipsis"></i>Andere
+          </div>
+        </div>
+        <div id="results-wrapper">
+          <div id="results"></div>
+        </div>
+      </div>
+      <div class="buttons">
+        <button id="cancel">Abbrechen</button>
+        <button class="action disabled" id="insert-button">Einfügen</button>
       </div>
     </div>
   </div>

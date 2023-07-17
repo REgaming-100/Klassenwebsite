@@ -1,5 +1,7 @@
 <?php
 
+require $mainDir."/php/private/uploads.php";
+
 $topic = isset($_GET["topic"]) ? $_GET["topic"] : null;
 
 $allTopics = array_map(function ($x) { return basename($x); }, glob($mainDir."/articles/*", GLOB_ONLYDIR));
@@ -46,6 +48,7 @@ if ($validArticleRequest) {
 <head>
   <title>Unsere Klassenwebsite<?php if ($validArticleRequest) echo " &ndash; ".$articleData["title"] ?></title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="stylesheet" type="text/css" href="/assets/css/article.css">
   <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -141,8 +144,8 @@ function iterateTags($elementArray) {
         case "table":
           echo '<table class="'.implode(" ", $parameters).'">';
           break;
-        case "img":
-          echo '<img src="assets/media/'.$content[0].'">';
+        case "file":
+          echo getUploadArticleElement($tag);
           continue 2;
         default:
           echo "<$type>";

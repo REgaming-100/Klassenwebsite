@@ -115,7 +115,7 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
       $ti++;
       $outIndex = isset($outIndex) ? $outIndex: 0;
       $outIndexIndex = isset($outIndexIndex) ? $outIndexIndex: 0;
-      
+
       if ($token->type == "Tag" && $token->content == "table") {
         break;
       }
@@ -211,27 +211,27 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
           $outType = "blockquote";
           $returnToken = new Token("Tag", "quote");
           break;
-        case "personsays":
-          $outType = "personsays";
-          $returnToken = new Token("personsays");
-          break;
         case "table":
           $outType = "table";
           $returnToken = new Token("Tag", "table");
           break;
-        case "image":
-          $outType = "img";
+        case "file":
+          $outType = "file";
           $returnToken = new Token("NewLine");
           break;
         case "code":
           $outType = "codeblock";
           $returnToken = new Token("Tag", "code");
           break;
+        case "say":
+          $outType = "personsays";
+          $returnToken = new Token("Tag", "say");
+          break;
         default:
           echo "Error: Unrecognized tag type '".$token->content."'\n";
           exit();
       }
-      
+
       if ($returnToken->type == "Tag" && $ta[$ti]->type == "Text" && $ta[$ti + 1]->type == "NewLine") {
         $ti += 2;
         $result = evaluateInTag($outType, $returnToken, $ta, $ti, [], explode(" ", $ta[$ti - 2]->content));
@@ -239,7 +239,7 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
       else {
         $result = evaluateInTag($outType, $returnToken, $ta, $ti);
       }
-      
+
       $out["content"][] = $result;
     }
     else if (str_starts_with($token->type, "Tag")) {
@@ -259,6 +259,14 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
           "content" => [trim($ta[$ti]->content)]
         ];
         $ti +=4;
+      }
+      else if ($ta[$ti]->type == "Text" && $ta[$ti + 1]->type == "BracketClose") {
+        $out["content"][] = [
+          "type" => "a",
+          "parameters" => [trim($ta[$ti]->content)],
+          "content" => [preg_replace("/^https?:\/\//", "", trim($ta[$ti]->content))]
+        ];
+        $ti +=2;
       }
       else {
         echo "Error: Unexpected token '".$token->content." (token #".$ti.")'\n";

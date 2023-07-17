@@ -12,6 +12,8 @@ if ($_REQUEST["request-type"] == "search") {
     exit();
   }
 
+  require $mainDir."/php/private/uploads.php";
+
   $json = file_get_contents($mainDir."/articles/keywords.json");
   $keywords = json_decode($json, true);
   $matchingArticles = [];
@@ -32,15 +34,20 @@ if ($_REQUEST["request-type"] == "search") {
     $newestVersion = max(glob($mainDir."/articles/$article/*.json"));
     $json = file_get_contents($newestVersion);
     $articleContent = json_decode($json, true);
-    $allImages = searchArray($articleContent, "type", "img");
-    $coverImage = isset($allImages[0]["content"]) ? $allImages[0]["content"] : "";
+    unset($coverImage);
+    $allFiles = searchArray($articleContent, "type", "file");
+    foreach ($allFiles as $file) {
+      if (explode("/", getUploadData($file["content"][0])["meta"]["type"])[0] == "image") {
+        $coverImage = $file["content"][0];
+      }
+    }
     array_push($jsons, [
       "id" => $article,
       "title" => $articleContent["title"],
       "subtitle" => $articleContent["subtitle"],
       "description" => $articleContent["description"],
       "infos" => $articleContent["infos"],
-      "image" => $coverImage
+      "image" => returnIfSet($coverImage)
     ]);
   }
 
@@ -76,7 +83,7 @@ else {
 }
 
 function searchArray($array, $key, $value) {
-  $results = array();
+  $results = [];
   search_r($array, $key, $value, $results);
   return $results;
 }
