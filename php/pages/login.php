@@ -4,6 +4,8 @@ if (isset($_SESSION["verified"]) && $_SESSION["verified"]) {
   redirect();
 }
 
+$hashedkey = "\$2y\$10\$/sPKF/4FWvIQS5TqBGqPi.AMGrjeOJEbUlxe3LiaMSjSwwMrIEZqC";
+
 if (isset($_POST["key"])) {
   $key = trim($_POST["key"]);
   $passwordVerified = password_verify(

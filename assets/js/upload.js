@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
       fd = new FormData();
       fd.append("request-type", "upload");
       fd.append("title", $("#title").val());
-      fd.append("description", $("#description").html());
+      fd.append("description", $("#description").val());
       fd.append("file", file);
 
       $.ajax({

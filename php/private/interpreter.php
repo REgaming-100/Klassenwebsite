@@ -115,7 +115,7 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
       $ti++;
       $outIndex = isset($outIndex) ? $outIndex: 0;
       $outIndexIndex = isset($outIndexIndex) ? $outIndexIndex: 0;
-      
+
       if ($token->type == "Tag" && $token->content == "table") {
         break;
       }
@@ -215,8 +215,8 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
           $outType = "table";
           $returnToken = new Token("Tag", "table");
           break;
-        case "image":
-          $outType = "img";
+        case "file":
+          $outType = "file";
           $returnToken = new Token("NewLine");
           break;
         case "code":
@@ -231,7 +231,7 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
           echo "Error: Unrecognized tag type '".$token->content."'\n";
           exit();
       }
-      
+
       if ($returnToken->type == "Tag" && $ta[$ti]->type == "Text" && $ta[$ti + 1]->type == "NewLine") {
         $ti += 2;
         $result = evaluateInTag($outType, $returnToken, $ta, $ti, [], explode(" ", $ta[$ti - 2]->content));
@@ -239,7 +239,7 @@ function evaluateInTag($type, $returnOn, &$ta, &$ti, $content = [], $parameterAr
       else {
         $result = evaluateInTag($outType, $returnToken, $ta, $ti);
       }
-      
+
       $out["content"][] = $result;
     }
     else if (str_starts_with($token->type, "Tag")) {

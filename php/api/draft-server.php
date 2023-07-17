@@ -192,8 +192,11 @@ function iterateTags($elementArray) {
           $body .= iterateTable($content)."\n";
           $body .= "&table\n\n";
           break;
-        case "img":
-          $body .= "&image ".$content[0]."\n\n";
+        case "file":
+          if (preg_match("/&file [0-9a-f]+\n\n$/", $body)) {
+            $body = substr($body, 0, -1);
+          }
+          $body .= "&file ".$content[0]."\n\n";
           break;
       }
     }

@@ -169,23 +169,35 @@ function getPreview($id, $fixed = false) {
   }
   else if (explode("/", $mimeType)[0] == "video") {
     if ($fixed) {
-      $return .= '';
+      $return .= "";
     }
     else {
-      $return .= '<video controls class="content content-video" src="/upload/'.$id.'" type="'.$mimeType.'"></video>';
+      $return .= '<video class="content content-video" src="/upload/'.$id.'#t=0.001" type="'.$mimeType.'" preload="metadata" controls></video>';
     }
-    
+  }
+  else if (explode("/", $mimeType)[0] == "audio") {
+    if ($fixed) {
+      $return .= "";
+    }
+    else {
+      $return .= '<audio controls class="content content-audio" src="/upload/'.$id.'" type="'.$mimeType.'"></video>';
+    }
   }
   else if ($mimeType == "application/pdf") {
     if ($fixed) {
       $return .= '<img class="content content-img" src="/upload/'.$id.'" type="application/pdf">';
     }
     else {
-      $return .= '<embed class="content content-pdf" src="/upload/'.$id.'" type="application/pdf">';
+      $return .= '<iframe class="content content-pdf" src="/upload/'.$id.'" type="application/pdf"></iframe>';
     }
   }
   else {
-    $return .= '<p id="no-preview">'.$extension.'-Datei<br>Keine Vorschau verfügbar.</p>';
+    if ($fixed) {
+      $return .= "";
+    }
+    else {
+      $return .= '<p id="no-preview">'.$extension.'-Datei<br>Keine Vorschau verfügbar.</p>';
+    }
   }
 
   return $return;
@@ -201,7 +213,7 @@ function getUploadOverview($links = false) {
     $uploadTime = date("d.m.Y", $meta["upload"]);
     $fileSizeArray = shortenFileSize($meta["size"]);
     $fileSize = round($fileSizeArray["size"], 1) . " " . $fileSizeArray["multiplier"] . "B";
-  
+
     $group = groupUploadType($meta["type"], $data["filenames"]["extension"], returnIfSet($data["data"]["code"]))["group"];
 
     $return .= '<'.($links ? "a" : "div").' class="upload';
@@ -221,6 +233,51 @@ function getUploadOverview($links = false) {
     $return .=   '</div>';
     $return .= '</'.($links ? "a" : "div").'>';
   }
+
+  return $return;
+}
+
+function getUploadArticleElement($tag) {
+  global $mainDir;
+
+  $id = $tag["content"][0];
+  $uploadData = getUploadData($id);
+  $mimeType = $uploadData["meta"]["type"];
+  $linkToFile = "/upload/$id";
+  $linkToViewer = "/upload/$id/view";
+
+  $return = '<div class="file">';
+  switch (explode("/", $mimeType)[0]) {
+    case "text":
+      $return .= '<div class="text'.($uploadData["data"]["code"] ? " code" : "").'">
+        <div id="top-bar">'.$uploadData["display"]["title"].'</div>
+        <div id="content">'.file_get_contents($mainDir."/assets/uploads/$id/".getContentFilename($id)).'</div>
+      </div>';
+      break;
+    case "image":
+      $return .= '<img src="'.$linkToFile.'">';
+      break;
+    case "video":
+      $return .= '<video src="'.$linkToFile.'#t=0.001" preload="none" controls></video>';
+      break;
+    case "audio":
+      $return .= '<audio src="'.$linkToFile.'">';
+      break;
+    case "application":
+      if ($mimeType = "application/pdf") {
+        $return .= '<iframe class="pdf" src="/upload/'.$id.'" type="application/pdf"></iframe>';
+      }
+      break;
+    default:
+      $return .= '<div class="file-error" upload-id="'.$id.'">
+        <i class="fa-solid fa-file"></i>
+        <h1>Für diesen Dateityp ist keine Ansicht verfügbar</h1>
+        <div id="title">'.$uploadData["display"]["title"].'</div>
+        <div id="filename">'.$uploadData["filenames"]["basename"].'</div>
+        <button id="open">Öffnen</button>
+      </div>';
+  }
+  $return .= "</div>";
 
   return $return;
 }

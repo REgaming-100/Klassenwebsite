@@ -1,5 +1,7 @@
 <?php
 
+require $mainDir."/php/private/uploads.php";
+
 $topic = isset($_GET["topic"]) ? $_GET["topic"] : null;
 
 $allTopics = array_map(function ($x) { return basename($x); }, glob($mainDir."/articles/*", GLOB_ONLYDIR));
@@ -141,8 +143,8 @@ function iterateTags($elementArray) {
         case "table":
           echo '<table class="'.implode(" ", $parameters).'">';
           break;
-        case "img":
-          echo '<img src="/upload/'.$content[0].'">';
+        case "file":
+          echo getUploadArticleElement($tag);
           continue 2;
         default:
           echo "<$type>";

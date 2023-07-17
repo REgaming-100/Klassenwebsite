@@ -37,7 +37,7 @@ else if ($_REQUEST["request-type"] == "upload") {
   $fileName = $pathInfo["filename"];
   $fileBasename = $pathInfo["basename"];
   
-  $mimeType = mime_content_type($filePath);
+  $mimeType = mime_type($filePath);
   
   $specialData = [];
   

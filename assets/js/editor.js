@@ -369,7 +369,10 @@ document.addEventListener("DOMContentLoaded", function () {
     $("#box-files #insert-button").on("click", function () {
       if (!$(this).hasClass("disabled")) {
         content = $("#editor-content").val();
-        if (!content.endsWith("\n\n")) {
+        if (content.match(/&file [0-9a-f]+\n?$/)) {
+          $("#editor-content").val(content.trimEnd() + "\n");
+        }
+        else if (!content.endsWith("\n\n")) {
           $("#editor-content").val(content.trimEnd() + "\n\n");
         }
         $("#box-files .upload.selected").each(function (i, file) {

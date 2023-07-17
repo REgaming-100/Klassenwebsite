@@ -2,6 +2,10 @@
 
 require $mainDir."/php/private/uploads.php";
 
+if (!is_dir($mainDir."/assets/uploads/".$uploadId)) {
+  httpResponse(404);
+}
+
 $fileData = getUploadData($uploadId);
 
 $fileSizeArray = shortenFileSize($fileData["meta"]["size"]);
