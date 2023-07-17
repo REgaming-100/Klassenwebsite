@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
           if (e.image) {
             $image = `
               <div class="image">
-                <img src="assets/media/${e.image}">
+                <img src="/upload/${e.image}">
               </div>
             `;
           }

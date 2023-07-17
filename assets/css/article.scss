@@ -59,34 +59,34 @@ main {
     gap: 30px;
     justify-content: center;
     margin-bottom: 40px;
-  
+
     .property {
       flex-basis: 30%;
       padding: 20px;
       border: 2px solid $accent-color;
       border-radius: 10px;
       text-align: center;
-  
+
       i {
         font-size: 30px;
         color: $accent-color;
         margin-bottom: 10px;
         display: block;
       }
-  
+
       h2 {
         font-family: 'Source Sans Pro';
         font-size: 20px;
         margin-bottom: 10px;
       }
-  
+
       p {
         font-size: 16px;
         margin-bottom: 0;
       }
     }
   }
-  
+
   article {
     *:last-child {
       margin-bottom: 0;
@@ -140,6 +140,10 @@ main {
             border-top-right-radius: 10px;
           }
         }
+
+        &:hover {
+          background-color: #f4f4f4;
+        }
       }
 
       &:last-child {
@@ -153,9 +157,10 @@ main {
           }
         }
       }
-      
+
       &:hover {
         background-color: #f4f4f4;
+
       }
 
       td {
@@ -192,6 +197,109 @@ main {
       border-radius: 10px;
       background-color: #eeeeee;
       font-size: 17px;
+    }
+
+    .file {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      overflow: hidden;
+
+      .file-error {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #eeeeee;
+        border-radius: 15px;
+        border: 2px solid #cccccc;
+        padding: 20px;
+
+        i {
+          font-size: 35px;
+        }
+
+        h1 {
+          font-weight: 300;
+          font-size: 23px;
+          margin: 10px 0 5px 0;
+        }
+
+        #title {
+          font-family: "Source Sans Pro", sans-serif;
+          font-weight: 700;
+          font-size: 23px;
+        }
+
+        #filename {
+          font-family: "Chivo Mono", monospace;
+          font-size: 15px;
+          margin-top: 3px;
+        }
+
+        #open {
+          margin-top: 15px;
+          padding: 6px 10px;
+          border: none;
+          background-color: $interaction-color;
+          color: #ffffff;
+          border-radius: 5px;
+          font-size: 16px;
+          cursor: pointer;
+        }
+      }
+
+      img, video {
+        border-radius: 15px;
+        max-width: 100%;
+        max-height: 80vh;
+      }
+
+      img {
+        max-width: 75%;
+      }
+
+      .pdf {
+        width: 70%;
+        max-height: 100vh;
+        aspect-ratio: 595 / 909;
+      }
+
+      .text {
+        border-radius: 20px;
+        width: 100%;
+        overflow: hidden;
+
+        #top-bar {
+          padding: 6px 12px;
+          color: #000000;
+          background-color: #dddddd;
+          font-family: "Source Sans Pro", sans-serif;
+          font-weight: bold;
+          font-size: 24px;
+        }
+
+        #content {
+          padding: 10px;
+          color: #000000;
+          background-color: #eeeeee;
+          font-family: "Chivo Mono", monospace;
+          font-size: 18px;
+          white-space: pre-wrap;
+        }
+
+        &.code {
+          #top-bar {
+            color: #ffffff;
+            background-color: #444444;
+          }
+  
+          #content {
+            color: #ffffff;
+            background-color: #666666;
+          }
+        }
+      }
     }
   }
 }

@@ -4,19 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
   articleId = localStorage.getItem("editor-article-id");
   changesSaved = true;
   needingStartPopup = true;
+  uploadsLoaded = false;
     
   // Function for manual and home
   $("menu item #manual").on("click", function () {
-    openManual = function () { window.open("manual.php","_self") };
-
-    if (changesSaved) {
-      openManual();
-    }
-    else {
-      popupSaveChanges(openManual, function () {
-        uploadContent(openManual);
-      }, "du das Handbuch öffnest");
-    }
+    window.open("manual.php", "_blank");
   });
   $("menu item #home").on("click", function () {
     openHome = function () { window.open("write.php","_self") };
@@ -73,6 +65,12 @@ document.addEventListener("DOMContentLoaded", function () {
       }, "du veröffentlichst");
     }
   });
+  $("menu item #files").on("click", function () {
+    popupFiles();
+  });
+
+  // Set all event listeners of the files popup
+  setupPopupFiles();
 
   // Force some inputs to be one line
   $(".edit-without-nl").keydown(function(e) {
@@ -274,6 +272,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  function popupFiles() {
+    $("#popups #darkener").addClass("shown");
+    $("#popups #box-files").addClass("shown");
+
+    if (!uploadsLoaded) {
+      loadUploads();
+    }
+  }
+
   // The function to close any popup by its id
   function closePopup(id) {
     $("#popups #" + id).removeClass("shown");
@@ -308,4 +315,87 @@ document.addEventListener("DOMContentLoaded", function () {
       })
     }, 2000);
   }
+
+  function loadUploads() {
+    $.ajax({
+      type: "GET",
+      data: {
+        "request-type": "overview"
+      },
+      url: "api/upload-server.php",
+      success: function (response) {
+        $("#popups #box-files #results").html(response);
+        setupPopupFilesUploads();
+      }
+    })
+  }
+
+  function filterFiles(searchTerm) {
+    if ($("#box-files #filters div.selected").length > 0) {
+      $("#box-files .upload").css("display", "none");
+
+      $("#box-files #filters div.selected").each(function (i, filter) {
+        filterName = $(filter).attr("upload-filter");
+        $("#box-files .upload.type-"+filterName).css("display", "flex");
+      });
+    }
+    else {
+      $("#box-files .upload").css("display", "flex");
+    }
+
+    if (searchTerm) {
+      $.each($("#box-files .upload"), function (i, upload) {
+        title = $(upload).children("#details").children("h1").html();
+        if (title.toLowerCase().indexOf(searchTerm.toLowerCase()) < 0) {
+          $(upload).css("display", "none");
+        }
+      });
+    }
+  }
+
+  function setupPopupFiles() {
+    $("#box-files #upload-new").on("click", function () {
+      window.open("upload.php", "_blank");
+    });
+
+    $("#box-files #search").on("input", function () {
+      filterFiles($(this).val());
+    });
+    $("#box-files #filters div").on("click", function () {
+      $(this).toggleClass("selected");
+      filterFiles();
+    });
+
+    $("#box-files #insert-button").on("click", function () {
+      if (!$(this).hasClass("disabled")) {
+        content = $("#editor-content").val();
+        if (content.match(/&file [0-9a-f]+\n?$/)) {
+          $("#editor-content").val(content.trimEnd() + "\n");
+        }
+        else if (!content.endsWith("\n\n")) {
+          $("#editor-content").val(content.trimEnd() + "\n\n");
+        }
+        $("#box-files .upload.selected").each(function (i, file) {
+          $("#editor-content").val($("#editor-content").val() + "&file " + $(file).attr("upload-id") + "\n");
+        });
+
+        adjustBox();
+        closePopup("box-files");
+        changesSaved = false;
+      }
+    });
+  }
+
+  function setupPopupFilesUploads() {
+    $("#box-files .upload").on("click", function () {
+      $(this).toggleClass("selected");
+      if ($("#box-files .upload.selected").length > 0) {
+        $("#box-files #insert-button").removeClass("disabled");
+      }
+      else {
+        $("#box-files #insert-button").addClass("disabled");
+      }
+    });
+  }
+
 })

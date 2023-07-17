@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Unsere Klassenwebsite &ndash; Alle Artikel</title>
+  <meta name="format-detection" content="telephone=no">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="stylesheet" type="text/css" href="/assets/css/selection.css">
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

@@ -4,6 +4,8 @@ if (isset($_SESSION["verified"]) && $_SESSION["verified"]) {
   redirect();
 }
 
+$hashedkey = "\$2y\$10\$/sPKF/4FWvIQS5TqBGqPi.AMGrjeOJEbUlxe3LiaMSjSwwMrIEZqC";
+
 if (isset($_POST["key"])) {
   $key = trim($_POST["key"]);
   $passwordVerified = password_verify(
@@ -38,6 +40,7 @@ function redirect() {
 <html>
 <head>
   <title>Unsere Klassenwebsite &ndash; Login</title>
+  <meta name="format-detection" content="telephone=no">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="stylesheet" type="text/css" href="/assets/css/login.css">
 </head>
