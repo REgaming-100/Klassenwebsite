@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Set variables
   articleId = localStorage.getItem("editor-article-id");
   changesSaved = true;
-  needingStartPopup = true;
+  newDraft = false;
   uploadsLoaded = false;
     
   // Function for manual and home
@@ -52,11 +52,11 @@ document.addEventListener("DOMContentLoaded", function () {
       afterSpin("#load", "fa-cloud-arrow-down");
     });
   });
-  //$("menu #dropper").on("click", function () {
-  //  $("#dropdown").toggleClass("show");
-  //});
   $("menu item #publish").on("click", function () {
-    if (changesSaved) {
+    if (newDraft) {
+      uploadContent(popupPublish);
+    }
+    else if (changesSaved) {
       popupPublish();
     }
     else {
@@ -93,13 +93,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Close the dropdown when the user clicks out of it
-  //$(window).on("click", function (event) {
-  //  if (!$(event.target).is("#dropper")) {
-  //    $("#dropdown").removeClass("show");
-  //  }
-  //});
-
   // Close popups when their x is clicked
   $("#popups .box i").on("click", function () {
     closePopup($(this).parent().attr("id"));
@@ -129,6 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "api/draft-server.php",
       success: function () {
         changesSaved = true;
+        newDraft = false;
 
         successFunction ? successFunction() : null;
       }
@@ -146,9 +140,8 @@ document.addEventListener("DOMContentLoaded", function () {
         changesSaved = true;
 
         json = JSON.parse(response);
-        if (needingStartPopup) {
-          popupStart(json["new"]);
-        }
+        newDraft = json["new"];
+        if (newDraft) { changesSaved = false; }
         $("#title").html(json["title"]);
         $("subtitle").html(json["subtitle"]);
         $("#description").html(json["description"]);
@@ -195,19 +188,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     $("menu item i:not(#home)").addClass("disabled").off("click");
-  }
-
-  // The popup when you first open the article in editor
-  // This is not working yet.
-  function popupStart(newDraft) {
-    needingStartPopup = false;
-
-    if (newDraft) {
-      popUpText = "Das ist eine nagelneue Bearbeitungsversion. Du kannst hier deine Änderungen vornehmen"
-    }
-    else {
-      popUpText = "Oh, hier hat schon jemand was gemacht. Du kannst es weiter bearbeiten und dann veröffentlichen!"
-    }
   }
 
   // When you perform an action where you might want to save before

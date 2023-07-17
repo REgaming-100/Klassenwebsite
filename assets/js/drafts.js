@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
 
   $(".edit-draft").on("click", function () {
-    id = $(this).parent().parent().children("p").children("code").html();
+    id = $(this).parent().parent().attr("article-id");
     localStorage.setItem("editor-article-id", id);
     window.open("editor.php","_self");
   });
 
   $(".delete-draft").on("click", function () {
     if (!$(this).hasClass("disabled")) {
-      id = $(this).parent().parent().children("p").children("code").html();
+      id = $(this).parent().parent().attr("article-id");
 
       $.ajax({
         type: "POST",

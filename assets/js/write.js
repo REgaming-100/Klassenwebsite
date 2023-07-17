@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
           $("#search-results").append(`
             <div class="search-result">
               <p>${e.title}<i>${e.id}</i></p>
-              <a class="edit-article-select"><i class="fa-solid fa-pen-to-square"></i></a>
+              <a class="edit-article-select"><span>Bearbeiten</span><i class="fa-solid fa-pen-to-square"></i></a>
             </div>
           `)
         });
