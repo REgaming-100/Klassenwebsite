@@ -105,16 +105,16 @@ Als unser mutiger Held auf …</codeblock>
       <div class="file">
         <img src="/assets/images/where-to-find-upload-id.png">
       </div>
-      <p>Dort steht die ID, hinter dem <code>#</code>. Oder du benutzt ganz einfach das genau <a href="?show=tools,format#tools-files">dafür vorgesehene Tool</a>. Klicke auf <i class="fa-solid fa-photo-film"></i> und wähle eine oder mehrere Datei(en) aus</p>
+      <p>Dort steht die ID, hinter dem <code>#</code>. Oder du benutzt ganz einfach das genau <a href="?show=tools,format#tools-files">dafür vorgesehene Tool</a>. Klicke auf <i class="fa-solid fa-photo-film"></i> und wähle dort eine oder mehrere Datei(en) aus.</p>
       <h3>Mehrzeilige Tags</h3>
-      <p>Mehrzeilige Beanspruchung mehrere Zeilen auf einmal, erlauben dafür aber auch, dass der Inhalt mehrere Zeilen lang ist. Man braucht einen Öffnungs-Tag, der anzeigt, dass ein Mehrzeiliger Tag beginnt, und zum Schluss einen Schluss-Tag. Die sind dann das jeweilige Keyword. Hinter dem Öffnungs-Tag ist aber noch Platz, der für Faktoren genutzt wird. Ein Faktor ist nicht Teil des Inhaltes, sondern ändern was am Tag. Dazu steht mehr bei der Tabelle.</p>
+      <p>Mehrzeilige beanspruchen mehrere Zeilen auf einmal, erlauben dafür aber auch, dass der Inhalt mehrere Zeilen lang ist. Man braucht einen Öffnungs-Tag, der anzeigt, dass ein Mehrzeiliger Tag beginnt, und zum Schluss einen Schluss-Tag. Die sind dann das jeweilige Keyword. Hinter dem Öffnungs-Tag ist aber noch Platz, der für Parameter genutzt wird. Ein Parameter ist nicht Teil des Inhaltes, sondern ändern was am Tag. Dazu steht mehr bei der Tabelle.</p>
       <h4>Zitate</h4>
       <p>Mit dem Keyword <code>&amp;quote</code> kann man ein Zitat makieren. Diese müssen aber allein in einer Zeile stehen und das Zitat dazwischen. Beispiel:</p>
       <codeblock>&amp;quote
 Ich heiße Robert
 &amp;quote</codeblock>
       <h4>Code</h4>
-      <p>Mit dem Keyword <code>&amp;code</code> kann man einen Codeblock makieren. Diese haben auch keine Faktoren und können einfach so geschrieben werden:</p>
+      <p>Mit dem Keyword <code>&amp;code</code> kann man einen Codeblock makieren. Diese haben auch keine Parameter und können einfach so geschrieben werden:</p>
       <codeblock>&amp;code
 package spielwiese;
 
@@ -124,8 +124,14 @@ public class Main {
   }
 }
 &amp;code</codeblock>
+      <h4>Kommentare</h4>
+      <p><code>&amp;say</code> wird benutzt, um eigene Kommentare hinzuzufügen. Schreib dort gerne deine eigenen Erfahrungen oder Meinungen rein, denn dafür ist diese Funktion da. Man kann diese Kommentare auch beliebig im Text platzieren, nicht nur am Ende.</p>
+      <p>Dieser mehrzeilige Tag hat auch einen Parameter, nämlich die Person, von der die Aussage stammt. Beispiel:</p>
+      <codeblock>&amp;say <?php echo empty($_SESSION["name"]) ? "Emil" : $_SESSION["name"]; ?><br>Kiwikopf war manchmal einfach richtig nervig und hat mich total aufgeregt
+&amp;say</codeblock>
+      <p>Gib aber bitte nur deinen Namen als Parameter an und lege nicht jemandem etwas in den Mund ;)</p>
       <h4>Tabellen</h4>
-      <p>Mit dem Keyword <code>&amp;table</code> kann man ein Zitat makieren. Die Tabelle ist der erste Tag, der auch Faktoren benutzt. Es können die Faktoren <code>top</code> und <code>side</code> hinter dem Öffnungs-Tag stehen, die den Tabellenkopf bestimmen. Sie können auch kombiniert werden. Die Tabellen Reihen werden einfach durch neue Zeilen ausgedrückt, während zwischen Zellen ein | (alt gr + <) stehen muss. Beispiel:</p>
+      <p>Mit dem Keyword <code>&amp;table</code> kann man ein Zitat makieren. Die Tabelle ist der erste Tag, der auch Parameter benutzt. Es können die Parameter <code>top</code> und <code>side</code> hinter dem Öffnungs-Tag stehen, die den Tabellenkopf bestimmen. Sie können auch kombiniert werden. Die Tabellen Reihen werden einfach durch neue Zeilen ausgedrückt, während zwischen Zellen ein | (alt gr + <) stehen muss. Beispiel:</p>
       <codeblock>&amp;table top side
 Cards | Devourer of Souls | Decipede | Viking
 Health | 6 | 3 | 8
