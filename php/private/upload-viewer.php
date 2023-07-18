@@ -29,9 +29,10 @@ $iconName = groupUploadType($mimeType, $fileData["filenames"]["extension"], retu
 </head>
 <body>
   <nav>
-    <a href="index.php"><img src="/assets/images/logo.png" alt="Logo" id="logo"></a>
-    <a href="selection.php">Artikel</a>
-    <a href="write.php">Schreib was!</a>
+    <a href="/index.php"><img src="/assets/images/logo.jpg" alt="Logo" id="logo"></a>
+    <a href="/selection.php">Artikel</a>
+    <a href="/write.php">Schreib was!</a>
+    <a href="/uploads">Dateien</a>
     <a id="logout"><i class="fa-solid fa-right-from-bracket"></i></a>
   </nav>
   <main>

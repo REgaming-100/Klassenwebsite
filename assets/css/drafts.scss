@@ -54,26 +54,26 @@
       #article-id {
         font-size: 0;
         margin: 0;
-    
+
         code {
           color: #666666;
           font-size: 15px;
         }
       }
-    
+
       #title-subtitle {
         h1 {
           font-size: 25px;
           display: inline;
           margin-right: 10px;
         }
-    
+
         subtitle {
           font-size: 20px;
           display: inline;
         }
       }
-    
+
       #last-edit {
         color: #666666;
         font-size: 15px;
@@ -127,15 +127,15 @@
     .result {
       flex-direction: column;
       gap: 10px;
-  
+
       #infos {
         width: 100%;
       }
-  
+
       #buttons {
         width: 100%;
         gap: 10px;
-  
+
         a {
           flex-basis: 50%;
         }
@@ -156,7 +156,7 @@
   #back-to-write {
     font-size: 4vw;
     margin: 2.5vw 0 7.5vw 0;
-  
+
     i {
       margin-right: 1.25vw;
       top: 0.25vw;
@@ -165,44 +165,44 @@
 
   #results {
     gap: 2.5vw;
-  
+
     .result {
       gap: 2.5vw;
       border-width: 0.375vw;
       border-radius: 3.75vw;
       padding: 3.75vw;
       box-shadow: 0 0.25vw 1.25vw -0.375vw rgba(0, 0, 0, 0.3);
-  
+
       #infos {
         #article-id {
           code {
             font-size: 3.75vw;
           }
         }
-      
+
         #title-subtitle {
           h1 {
             font-size: 6.25vw;
             margin-right: 2.5vw;
           }
-      
+
           subtitle {
             font-size: 5vw;
           }
         }
-      
+
         #last-edit {
           font-size: 3.75vw;
         }
       }
-  
+
       #buttons {
         gap: 1.5vw;
-  
+
         a {
           height: 10vw;
           border-radius: 2.5vw;
-  
+
           i {
             font-size: 5.25vw;
           }

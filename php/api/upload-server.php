@@ -11,41 +11,59 @@ if ($_REQUEST["request-type"] == "overview") {
   echo getUploadOverview();
 }
 else if ($_REQUEST["request-type"] == "upload") {
-  if (empty($_REQUEST["title"])) {
+  if (empty(returnIfSet($_REQUEST["title"]))) {
     echo "Error: No title provided";
     exit();
   }
-  
+  if (!isset($_FILES["file"])) {
+    echo "Error: No file provided";
+    exit();
+  }
+  $title = $_REQUEST["title"];
+
+  if (preg_match("/^\\\$profile_[A-ZÄÖÜẞa-zäöüß]{1,20}$/", $title) && $title != "\$profile_UNKNOWN") {
+    $title = str_replace("\$profile_", "", $title);
+
+    foreach (glob($mainDir."/assets/images/profiles/$title.*") as $file) {
+      unlink($file);
+    }
+
+    move_uploaded_file($_FILES["file"]["tmp_name"], $mainDir."/assets/images/profiles/$title.".pathinfo($_FILES["file"]["name"])["extension"]);
+
+    echo "\$profile";
+    exit();
+  }
+
   $allUploadIds = array_map(function ($x) {
     return basename($x);
   }, glob($mainDir."/assets/uploads/*", GLOB_ONLYDIR));
-  
+
   $currentId = bin2hex(random_bytes(8));
   while (in_array($currentId, $allUploadIds)) {
     $currentId = bin2hex(random_bytes(8));
   }
-  
+
   mkdir($mainDir."/assets/uploads/$currentId");
-  
+
   $jsonPath = $mainDir."/assets/uploads/$currentId/$currentId.json";
   $filePath = $mainDir."/assets/uploads/$currentId/".basename($_FILES["file"]["name"]);
-  
+
   move_uploaded_file($_FILES["file"]["tmp_name"], $filePath);
-  
+
   $pathInfo = pathinfo($filePath);
   $fileExtension = $pathInfo["extension"];
   $fileName = $pathInfo["filename"];
   $fileBasename = $pathInfo["basename"];
-  
+
   $mimeType = mime_type($filePath);
-  
+
   $specialData = [];
-  
+
   if (explode("/", $mimeType)[0] == "text") {
     $specialData = [
       "code" => false
     ];
-  
+
     foreach (json_decode(file_get_contents("https://gist.githubusercontent.com/aymen-mouelhi/82c93fbcd25f091f2c13faa5e0d61760/raw")) as $lang) {
       $lang = (array) $lang;
       if (isset($lang["extensions"]) && in_array(".".$fileExtension, (array) $lang["extensions"])) {
@@ -54,17 +72,17 @@ else if ($_REQUEST["request-type"] == "upload") {
       }
     }
   }
-  
+
   if (explode("/", $mimeType)[0] == "image") {
     $imageSize = getimagesize($filePath);
     $specialData = [
       "width" => $imageSize[0],
       "height" => $imageSize[1],
     ];
-  
+
     if ($mimeType == "image/jpeg") {
       $fileExif = exif_read_data($filePath, 0, true);
-  
+
       if (isset($fileExif["EXIF"]["DateTimeOriginal"])) {
         $specialData["taken"] = strtotime($fileExif["EXIF"]["DateTimeOriginal"]);
       }
@@ -81,12 +99,12 @@ else if ($_REQUEST["request-type"] == "upload") {
           "longitude" => $lonParts[0] + (($lonParts[1] * 60) + $lonParts[2]) / 3600,
           "altitude" => explode("/", $gps["GPSAltitude"])[0] / explode("/", $gps["GPSAltitude"])[1]
         ];
-  
+
         $specialData["location"] = $location;
       }
     }
   }
-  
+
   $array = [
     "filenames" => [
       "basename" => $fileBasename,
@@ -101,16 +119,16 @@ else if ($_REQUEST["request-type"] == "upload") {
     ],
     "data" => $specialData,
     "display" => [
-      "title" => $_REQUEST["title"]
+      "title" => $title
     ]
   ];
-  
+
   if (!empty($_REQUEST["description"])) {
     $array["display"]["description"] = $_REQUEST["description"];
   }
-  
+
   file_put_contents($jsonPath, str_replace("    ", "  ", json_encode($array, JSON_PRETTY_PRINT)));
-  
+
   echo $currentId;
 }
 else {

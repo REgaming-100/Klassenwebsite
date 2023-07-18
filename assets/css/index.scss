@@ -1,5 +1,9 @@
 @import 'general';
 
+main p {
+  margin-bottom: 7px;
+}
+
 #show-features {
   cursor: pointer;
 
@@ -47,7 +51,7 @@
       i {
         font-size: 8.75vw;
       }
-  
+
       div h3 {
         font-size: 5.5vw;
         text-align: center;

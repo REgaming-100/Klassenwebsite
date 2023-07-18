@@ -180,7 +180,7 @@ function getPreview($id, $fixed = false) {
       $return .= "";
     }
     else {
-      $return .= '<audio controls class="content content-audio" src="/upload/'.$id.'" type="'.$mimeType.'"></video>';
+      $return .= '<audio class="content content-audio" src="/upload/'.$id.'" type="'.$mimeType.'" preload="metadata" controls></audio>';
     }
   }
   else if ($mimeType == "application/pdf") {
@@ -261,7 +261,7 @@ function getUploadArticleElement($tag) {
       $return .= '<video src="'.$linkToFile.'#t=0.001" preload="none" controls></video>';
       break;
     case "audio":
-      $return .= '<audio src="'.$linkToFile.'">';
+      $return .= '<audio src="'.$linkToFile.'" preload="metadata" controls>';
       break;
     case "application":
       if ($mimeType = "application/pdf") {

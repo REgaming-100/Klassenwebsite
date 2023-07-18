@@ -10,11 +10,15 @@ main {
   }
 
   p {
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     color: #444444;
     font-size: 15px;
     text-align: center;
     max-width: 80%;
+
+    &:last-of-type {
+      margin-bottom: 25px;
+    }
   }
 
   #title {
@@ -122,30 +126,6 @@ main {
     display: flex;
     align-items: center;
     gap: 5px;
-
-    input[type="checkbox"] {
-      appearance: none;
-      -webkit-appearance: none;
-      border-radius: 30%;
-      width: 16px;
-      height: 16px;
-      border: 2px solid $interaction-color;
-      background-color: #ffffff;
-      transition: 0.1s background-color linear;
-
-      &:checked {
-        background-color: $interaction-color;
-
-        &::before {
-          color: #ffffff;
-          font-family: "Font Awesome 6 Free";
-          content: "\f00c";
-          position: relative;
-          bottom: 1px;
-          left: 1px;
-        }
-      }
-    }
   }
 
   #submit {

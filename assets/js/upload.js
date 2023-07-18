@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
       $("#submit").html(`<i class="fa-solid fa-spinner fa-spin"></i>`);
       failId = setTimeout(() => {
         $("#submit").html(`<i class="fa-solid fa-xmark"></i>`);
-        setTimeout(() => $("#submit i").html("Hochladen"), 2000);
+        setTimeout(() => $("#submit").html("Hochladen"), 2000);
       }, 5000);
 
       file = uploadedFile;
@@ -56,6 +56,11 @@ document.addEventListener("DOMContentLoaded", function () {
           setTimeout(() => {
             $("#submit").html("Hochladen");
           }, 2000);
+
+          if (uploadId == "$profile") {
+            $("#pfp-info").append('<br><b style="color: #4fb286;">Dein Profilbild wurde hochgeladen! Es wird spätestens in einer Stunde aktualisiert.</b>');
+            die();
+          }
 
           if ($("#stay:checked").length == 0) {
             window.open(`/upload/${uploadId}/view`, "_self");
@@ -81,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
     $("#upload-button").removeClass("placeholder").addClass("preview");
 
     fileSize = shortenFileSize(file.size);
-    
+
     buttonHtml = `<i class="fa-solid fa-xmark" id="close"></i>`;
 
     if (file.type.split("/")[0] == "image") {

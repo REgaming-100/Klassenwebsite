@@ -45,10 +45,10 @@
       transform: translateY(-5px);
       box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.3);
     }
-    
+
     .image {
       flex-basis: 25%;
-      
+
       img {
         display: block;
         height: 100%;
@@ -58,13 +58,13 @@
         object-position: center;
       }
     }
-    
+
     .content {
       flex-basis: 75%;
       padding: 20px;
       display: flex;
       flex-direction: column;
-      
+
       h2 {
         margin: 0;
         margin-bottom: 0;
@@ -72,7 +72,7 @@
         font-weight: 700;
         font-family: 'Source Sans Pro', sans-serif;
       }
-      
+
       h3 {
         margin: 0;
         margin-bottom: 10px;
@@ -80,13 +80,13 @@
         font-weight: 300;
         font-family: 'Source Sans Pro', sans-serif;
       }
-      
+
       p {
         margin: 0;
         font-size: 18px;
         margin-bottom: 15px;
       }
-      
+
       .meta {
         display: flex;
         flex-direction: row;
@@ -104,14 +104,14 @@
     margin: 20px 0 50px 0;
     display: flex;
     justify-content: center;
-  
+
     input {
       width: 100%;
       height: 10vw;
       border-radius: 2.5vw;
       font-size: 5vw;
       box-shadow: 0vw 0.25vw 0.75vw 0.625vw rgba(0, 0, 0, 0.1);
-  
+
       &::placeholder {
         font-size: 4vw;
       }
@@ -124,12 +124,12 @@
       border-radius: 5vw;
       box-shadow: 0vw 1vw 2.5vw rgba(0, 0, 0, 0.1);
       flex-direction: column;
-  
+
       &:hover {
         transform: translateY(-1.25vw);
         box-shadow: 0vw 1.25vw 3vw rgba(0, 0, 0, 0.3);
       }
-      
+
       .image {
         flex-grow: 1;
         min-height: 30vw;
@@ -143,17 +143,17 @@
         h2 {
           font-size: 6.25vw;
         }
-        
+
         h3 {
           margin-bottom: 1.75vw;
           font-size: 4.75vw;
         }
-        
+
         p {
           font-size: 3.5vw;
           margin-bottom: 2.5vw;
         }
-        
+
         .meta {
           justify-content: space-between;
           gap: 2.75vw;
@@ -171,17 +171,17 @@
         h2 {
           font-size: 8.25vw;
         }
-        
+
         h3 {
           margin-bottom: 2.5vw;
           font-size: 6.25vw;
         }
-        
+
         p {
           font-size: 4.5vw;
           margin-bottom: 3.75vw;
         }
-        
+
         .meta {
           justify-content: space-between;
           gap: 3.5vw;

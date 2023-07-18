@@ -2,7 +2,6 @@
 
 // Start session (for login)
 session_start();
-
 // Setup Paths
 $mainDir = __DIR__;
 $requestURI = strtok($_SERVER["REQUEST_URI"], "?");
@@ -75,7 +74,9 @@ if (preg_match("/^\/upload\/[0-9a-f]+\/?$/", $requestURI)) {
   $filePath = $mainDir."/assets/uploads/$uploadId/".getContentFilename($uploadId);
 
   $cache = true;
-  header("Content-Disposition: attachment; filename=".getContentFilename($uploadId));
+  if (getUploadData($uploadId)["meta"]["type"] != "application/pdf") {
+    header("Content-Disposition: attachment;   filename=".getContentFilename($uploadId));
+  }
 }
 if (preg_match("/^\/upload\/[0-9a-f]+\/view\/?$/", $requestURI)) {
   $explodedFilePath = explode("/", $filePath);
@@ -120,7 +121,12 @@ if ($filePath && is_file($filePath)) {
 
         header("Last-Modified: ". gmdate("D, d M Y H:i:s", $lastModified) ." GMT");
         header("Etag: ". $etagFile);
-        header("Cache-Control: public, max-age=2678400");
+        if (str_starts_with($requestURI, "/assets/images/profiles")) {
+          header("Cache-Control: public, max-age=3600");
+        }
+        else {
+          header("Cache-Control: public, max-age=2678400");
+        }
         header_remove("Pragma");
         header_remove("Expires");
 

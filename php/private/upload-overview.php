@@ -8,7 +8,7 @@ $allIds = getAllUploadIds();
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Unsere Klassenwebsite &ndash; Alle Uploads</title>
+  <title>Klassenwebsite &ndash; Alle Dateien</title>
   <meta name="format-detection" content="telephone=no">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="stylesheet" type="text/css" href="/assets/css/upload-overview.css">
@@ -18,14 +18,20 @@ $allIds = getAllUploadIds();
 </head>
 <body>
   <nav>
-    <a href="index.php"><img src="/assets/images/logo.png" alt="Logo" id="logo"></a>
-    <a href="selection.php">Artikel</a>
-    <a href="write.php">Schreib was!</a>
+    <a href="/index.php"><img src="/assets/images/logo.jpg" alt="Logo" id="logo"></a>
+    <a href="/selection.php">Artikel</a>
+    <a href="/write.php">Schreib was!</a>
+    <a href="/uploads">Dateien</a>
     <a id="logout"><i class="fa-solid fa-right-from-bracket"></i></a>
   </nav>
   <main>
     <div id="search">
-      <input type="text">
+      <div id="top">
+        <input type="text">
+        <a href="upload.php" id="upload-new">
+          <i class="fa-solid fa-plus"></i>Hochladen
+        </a>
+      </div>
       <div id="filters">
         <div upload-filter="image">
           <i class="fa-solid fa-image"></i>Bilder

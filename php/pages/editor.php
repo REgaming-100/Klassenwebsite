@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Unsere Klasse &ndash; Die Klassenwebsite</title>
+  <title>Klassenwebsite &ndash; Editor</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="format-detection" content="telephone=no">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">

@@ -4,7 +4,7 @@ if (isset($_SESSION["verified"]) && $_SESSION["verified"]) {
   redirect();
 }
 
-$hashedkey = "\$2y\$10\$/sPKF/4FWvIQS5TqBGqPi.AMGrjeOJEbUlxe3LiaMSjSwwMrIEZqC";
+$hashedkey = getenv("KEY");
 
 if (isset($_POST["key"])) {
   $key = trim($_POST["key"]);
@@ -39,7 +39,7 @@ function redirect() {
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Unsere Klassenwebsite &ndash; Login</title>
+  <title>Klassenwebsite &ndash; Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="format-detection" content="telephone=no">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">

@@ -12,7 +12,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
       $.ajax({
         type: "POST",
-        data: data = `request-type=delete-draft&article-id=${id}`,
+        data: {
+          "request-type": "delete-draft",
+          "article-id": id
+        },
         url: "api/draft-server.php",
         success: function () {
           location.reload();

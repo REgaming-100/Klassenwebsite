@@ -5,13 +5,16 @@ document.addEventListener("DOMContentLoaded", function () {
   changesSaved = true;
   newDraft = false;
   uploadsLoaded = false;
-    
+
   // Function for manual and home
   $("menu item #manual").on("click", function () {
     window.open("manual.php", "_blank");
   });
   $("menu item #home").on("click", function () {
-    openHome = function () { window.open("write.php","_self") };
+    openHome = function () {
+      changesSaved = true;
+      window.open("write.php","_self");
+    };
 
     if (changesSaved) {
       openHome();
@@ -100,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Adjust the textbox height to fit its content
   function adjustBox() {
-    elem = $("#editor-content")
+    elem = $("#editor-content");
 
     elem.height("0px");
 
@@ -110,15 +113,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Save everything to the DRAFTS folder
   function uploadContent(successFunction = null) {
-    title = encodeURIComponent($("#title").html());
-    subtitle = encodeURIComponent($("subtitle").html());
-    description = encodeURIComponent($("#description").html());
-    content = encodeURIComponent($("#editor-content").val());
+    title = $("#title").html();
+    subtitle = $("subtitle").html();
+    description = $("#description").html();
+    content = $("#editor-content").val();
 
-    data = `request-type=content-sync&article-id=${articleId}&title=${title}&subtitle=${subtitle}&description=${description}&content=${content}`
     $.ajax({
       type: "POST",
-      data: data,
+      data: {
+        "request-type": "content-sync",
+        "article-id": articleId,
+        "title": title,
+        "subtitle": subtitle,
+        "description": description,
+        "content": content
+      },
       url: "api/draft-server.php",
       success: function () {
         changesSaved = true;
@@ -131,10 +140,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Load everything from the DRAFTS folder
   function downloadContent(successFunction = null) {
-    data = "request-type=content-sync&article-id=" + articleId
     $.ajax({
       type: "GET",
-      data: data,
+      data: {
+        "request-type": "content-sync",
+        "article-id": articleId
+      },
       url: "api/draft-server.php",
       success: function (response) {
         changesSaved = true;
@@ -155,10 +166,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Publish everything to become a readable article
   function publishContent(importance, successFunction = null) {
-     data = `request-type=publish&article-id=${articleId}&change=${importance}`
     $.ajax({
       type: "POST",
-      data: data,
+      data: {
+        "request-type": "publish",
+        "article-id": articleId,
+        "change": importance
+      },
       url: "api/release-server.php",
       success: function (response) {
         successFunction ? successFunction() : null;
@@ -172,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
     $("#description-container").css("display", "none");
     $("#editor-content").css("display", "none");
     $("subtitle").removeClass("editable").prop("contenteditable", false);
-  
+
     if (badId) {
       $("subtitle").html("Die Artikel-ID enthält ein unerlaubtes Zeichen");
       $("#just-normal-text").html('Die Artikel-ID, die du gerade abrufen willst, enthält ungültige Zeichen. Das heißt, die <b>kann</b> es gar nicht geben! Gehe zurück, um einen gültigen Artikel auszuwählen.<div class="links"><a id="to-write">Auswahl-Seite<i class="fa-solid fa-angle-right"></i></a></div>');
@@ -187,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
       window.open("write.php", "_self");
     });
 
-    $("menu item i:not(#home)").addClass("disabled").off("click");
+    $("menu item i:not(#home, #manual)").addClass("disabled").off("click");
   }
 
   // When you perform an action where you might want to save before
@@ -214,10 +228,13 @@ document.addEventListener("DOMContentLoaded", function () {
       $("#publish-final").removeClass("disabled");
       $("#importance #error").removeClass("shown");
 
-      data = `request-type=next-version&article-id=${articleId}&change=${$(this).val()}`
       $.ajax({
         type: "GET",
-        data: data,
+        data: {
+          "request-type": "next-version",
+          "article-id": articleId,
+          "change": $(this).val()
+        },
         url: "api/release-server.php",
         success: function (response) {
           $("#next-version").html(response);
@@ -226,19 +243,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
       $("#publish-final").off("click");
       $("#publish-final").on("click", function () {
-        $("#publish-final").html('<i class="fa-solid"></i>')
-        spin("#publish-final i", "")
-        publishContent(
-          $("#importance label input:checked").val(),
-          function () {
-            afterSpin("#publish-final i", "fa-check");
-            localStorage.removeItem("editor-article-id");
-            noArticleId();
-            setTimeout(() => {
-              window.open(`article.php?topic=${articleId}`,"_self");
-            }, 500);
-          }
-        );
+        uploadContent(function () {
+          $("#publish-final").html('<i class="fa-solid"></i>');
+          spin("#publish-final i", "");
+          publishContent(
+            $("#importance label input:checked").val(),
+            function () {
+              afterSpin("#publish-final i", "fa-check");
+              localStorage.removeItem("editor-article-id");
+              noArticleId();
+              setTimeout(() => {
+                window.open(`article.php?topic=${articleId}`,"_self");
+              }, 500);
+            }
+          );
+        })
       });
     })
 
@@ -275,7 +294,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ["#save", "#load", "#publish"].forEach(function (item) {
       $(item).css("pointer-events", "none");
     })
-    
+
     $(id).removeClass(fa).addClass("fa-spinner").addClass("fa-spin");
     failId = setTimeout(() => {
       $(id).removeClass("fa-spinner").removeClass("fa-spin").addClass("fa-xmark");
@@ -289,7 +308,7 @@ document.addEventListener("DOMContentLoaded", function () {
     $(id).removeClass("fa-spinner").removeClass("fa-spin").addClass("fa-check");
     setTimeout(() => {
       $(id).removeClass("fa-check").addClass(fa);
-        
+
       ["#save", "#load", "#publish"].forEach(function (item) {
         $(item).css("pointer-events", "auto");
       })

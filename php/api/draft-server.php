@@ -43,7 +43,7 @@ if ($_REQUEST["request-type"] == "content-sync") {
         $title = "Titel";
         $subtitle = "Untertitel";
         $description = "Hier kommt eine kurze Beschreibung hin, die bei der Suche gezeigt wird.";
-        $body = "Schreibe hier über das Thema. Über die Möglichkeiten zum Formatieren kannst du dich beim i in der Toolbar informieren.";
+        $body = "Schreibe hier über das Thema. Über die Möglichkeiten zum Formatieren kannst du dich beim Buch in der Toolbar informieren.";
       }
       else {
         $json = file_get_contents(max(glob($mainDir."/articles/$articleId/*.json")));
@@ -61,7 +61,7 @@ if ($_REQUEST["request-type"] == "content-sync") {
       $subtitle = rtrim(fgets($file), "\n");
       $description = rtrim(fgets($file), "\n");
       fclose($file);
-  
+
       $body = "";
       $file = fopen($txtFilePath, 'c+');
       while(!feof($file)) {
@@ -88,9 +88,9 @@ else if ($_REQUEST["request-type"] == "delete-draft") {
   if (is_file($mainDir."/articles/DRAFTS/.$articleId")) {
     $file = fopen($mainDir."/articles/DRAFTS/.$articleId", "r");
     fgets($file); fgets($file); fgets($file);
-  
+
     $lastEditTimestamp = fgets($file);
-  
+
     if (time() - $lastEditTimestamp >= 259200) {
       unlink($mainDir."/articles/DRAFTS/.$articleId");
       unlink($mainDir."/articles/DRAFTS/$articleId.txt");
@@ -124,7 +124,7 @@ function writeToDraftFiles($title, $subtitle, $description, $body) {
 
 function iterateTags($elementArray) {
   $body = "";
-  
+
   foreach ($elementArray as $tag) {
     if (gettype($tag) == "string") {
       $escapedDangers = $tag;

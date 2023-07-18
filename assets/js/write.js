@@ -3,9 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
   searchRequest();
 
   $("#minisearch input").on("input", searchRequest);
-  
+
   var articleIdConfirmed = false
-  
+
   $("#edit-article-button").on("click", function () {
     $("#create-article-button").removeClass("active");
     $("#create-article-content").addClass("collapsed");
@@ -33,10 +33,12 @@ document.addEventListener("DOMContentLoaded", function () {
   $("#create-article-id-field").on("input", function () {
     articleIdConfirmed = false
 
-    data = "request-type=article-exists&article-id=" + $("#create-article-id-field").val()
     $.ajax({
       type: "GET",
-      data: data,
+      data: {
+        "request-type": "article-exists",
+        "article-id": $("#create-article-id-field").val()
+      },
       url: "api/article-server.php",
       success: function (response) {
         articleIdConfirmation($("#create-article-id-field").val(), response)
@@ -50,7 +52,10 @@ document.addEventListener("DOMContentLoaded", function () {
     data = "request-type=search&search-term=" + valueEntered;
     $.ajax({
       type: "GET",
-      data: data,
+      data: {
+        "request-type": "search",
+        "search-term": valueEntered
+      },
       url: "api/article-server.php",
       success: function (response) {
         json = JSON.parse(response);

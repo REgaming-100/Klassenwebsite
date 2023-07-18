@@ -46,20 +46,20 @@ if ($validArticleRequest) {
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Unsere Klassenwebsite<?php if ($validArticleRequest) echo " &ndash; ".$articleData["title"] ?></title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Klassenwebsite<?php if ($validArticleRequest) echo " &ndash; ".$articleData["title"] ?></title>
   <meta name="format-detection" content="telephone=no">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
   <link rel="stylesheet" type="text/css" href="/assets/css/article.css">
-  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="/assets/js/general.js"></script>
   <script src="/assets/js/article.js"></script>
 </head>
 <body>
   <nav>
-    <a href="index.php"><img src="/assets/images/logo.png" alt="Logo" id="logo"></a>
-    <a href="selection.php">Artikel</a>
-    <a href="write.php">Schreib was!</a>
+    <a href="/index.php"><img src="/assets/images/logo.jpg" alt="Logo" id="logo"></a>
+    <a href="/selection.php">Artikel</a>
+    <a href="/write.php">Schreib was!</a>
+    <a href="/uploads">Dateien</a>
     <a id="logout"><i class="fa-solid fa-right-from-bracket"></i></a>
   </nav>
   <main>
@@ -96,25 +96,6 @@ foreach($allVersions as $selectVersion) {
         </a>
       </div>
     </div>
-<?php
-if (isset($articleData["properties"])) {
-?>
-    <div class="properties">
-<?php
-foreach($articleData["properties"] as $property) {
-?>
-      <div class="property">
-        <i class="fa-solid fa-<?php echo $property["symbol"] ?>"></i>
-        <h2><?php echo $property["title"] ?></h2>
-        <p><?php echo $property["description"] ?></p>
-      </div>
-<?php
-}
-?>
-    </div>
-<?php
-}
-?>
     <article>
 <?php
 
@@ -139,10 +120,20 @@ function iterateTags($elementArray) {
           echo '<blockquote><i id="block-icon" class="fa-solid fa-quote-left"></i>';
           break;
         case "personsays":
-          echo '<personsays><img src="assets/images/profiles/'.$parameters[0].'.png"><div>';
+          unset($file);
+          foreach (glob("assets/images/profiles/*") as $imgFile) {
+            if (pathinfo($imgFile)["filename"] == $parameters[0]) {
+              $file = basename($imgFile);
+              break;
+            }
+          }
+          if (!isset($file)) {
+            $file = "UNKNOWN.png";
+          }
+          echo '<personsays><img src="assets/images/profiles/'.$file.'"><div>';
           break;
         case "table":
-          echo '<table class="'.implode(" ", $parameters).'">';
+          echo '<table'.(isset($parameters) ? ' class="'.implode(" ", $parameters).'"' : "").'>';
           break;
         case "file":
           echo getUploadArticleElement($tag);
@@ -211,8 +202,8 @@ if (!$topic) {
     <h2>Was tun?</h2>
     <p>Du kannst dir einen Artikel aus der Liste der Vorhandenen aussuchen. Wenn du eine Idee für ein Thema hast, schreib gerne darüber. Je mehr Themen wir haben, desto besser!</p>
     <div class="links">
-      <a href="selection.php">Artikelauswahl<i class="fa-solid fa-angle-right"></i></a>
-      <a href="write.php">Schreib was<i class="fa-solid fa-angle-right"></i></a>
+      <a href="/selection.php">Artikelauswahl<i class="fa-solid fa-angle-right"></i></a>
+      <a href="/write.php">Schreib was<i class="fa-solid fa-angle-right"></i></a>
     </div>
   </article>
 </div>
@@ -231,8 +222,8 @@ elseif (preg_match("/^[a-z0-9\-]*$/", $topic) == false) {
     <h2>Was tun?</h2>
     <p>Du kannst dir einen Artikel aus der Liste der Vorhandenen aussuchen. Wenn du eine Idee für ein Thema hast, schreib gerne darüber. Je mehr Themen wir haben, desto besser!</p>
     <div class="links">
-      <a href="selection.php">Artikelauswahl<i class="fa-solid fa-angle-right"></i></a>
-      <a href="write.php">Schreib was<i class="fa-solid fa-angle-right"></i></a>
+      <a href="/selection.php">Artikelauswahl<i class="fa-solid fa-angle-right"></i></a>
+      <a href="/write.php">Schreib was<i class="fa-solid fa-angle-right"></i></a>
     </div>
   </article>
 </div>
@@ -249,7 +240,7 @@ else {
     <h2>Was ist los?</h2>
     <p>Das Thema, das du mit <code>?topic</code> angegeben hast, wurde nicht gefunden.</p>
     <h2>Was tun?</h2>
-    <p>Du kannst gerne einen Text über "<?php echo $topic ?>" schreiben <a id="edit-article-select" topic="<?php echo $topic ?>"><i class="fa-solid fa-pen-to-square"></i></a> oder einen Artikel aus der Liste der Vorhandenen Artikel <a href="selection.php">aussuchen</a>.</p>
+    <p>Du kannst gerne einen Text über "<?php echo $topic ?>" schreiben <a id="edit-article-select" topic="<?php echo $topic ?>"><i class="fa-solid fa-pen-to-square"></i></a> oder einen Artikel aus der Liste der Vorhandenen Artikel <a href="/selection.php">aussuchen</a>.</p>
   </article>
 </div>
 

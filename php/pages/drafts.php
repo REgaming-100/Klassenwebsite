@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Unsere Klasse &ndash; Die Klassenwebsite</title>
+  <title>Klassenwebsite &ndash; Entwürfe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="format-detection" content="telephone=no">
   <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
@@ -12,9 +12,10 @@
 </head>
 <body>
   <nav>
-    <a href="index.php"><img src="/assets/images/logo.png" alt="Logo" id="logo"></a>
-    <a href="selection.php">Artikel</a>
-    <a href="write.php">Schreib was!</a>
+    <a href="/index.php"><img src="/assets/images/logo.jpg" alt="Logo" id="logo"></a>
+    <a href="/selection.php">Artikel</a>
+    <a href="/write.php">Schreib was!</a>
+    <a href="/uploads">Dateien</a>
     <a id="logout"><i class="fa-solid fa-right-from-bracket"></i></a>
   </nav>
   <main>

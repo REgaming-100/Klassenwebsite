@@ -67,7 +67,7 @@ main {
         border-radius: 10px;
         background-color: #eeeeee;
         color: #000000;
-  
+
         &.content-code {
           background-color: #444444;
           color: #ffffff;
@@ -75,13 +75,13 @@ main {
           white-space: pre;
         }
       }
-  
+
       &.content-img {
         display: block;
         height: auto;
         border-radius: 0;
       }
-  
+
       &.content-pdf {
         width: 100%;
         min-height: 909px;

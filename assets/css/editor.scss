@@ -157,25 +157,6 @@ menu {
           margin-bottom: 0;
         }
 
-        input[type="radio"] {
-          appearance: none;
-          -webkit-appearance: none;
-          border-radius: 50%;
-          width: 16px;
-          height: 16px;
-          border: 2px solid $interaction-color;
-          background-color: $interaction-color;
-          box-shadow: 0 0 0 6px #eeeeee inset;
-          transition: 0.2s box-shadow linear;
-          margin-right: 2px;
-          position: relative;
-          top: 2px;
-
-          &:checked {
-            box-shadow: 0 0 0 2px #eeeeee inset;
-          }
-        }
-
         b {
           display: inline;
           font-weight: 600;
@@ -223,12 +204,12 @@ menu {
           cursor: not-allowed;
           filter: saturate(0%);
         }
-  
+
         &.action {
           background-color: $interaction-color;
           color: #ffffff;
         }
-  
+
         &.danger {
           background-color: $warning-color;
           color: #ffffff;
@@ -272,7 +253,7 @@ menu {
             border-radius: 10px;
             border: 2px solid #dddddd;
             outline: none;
-  
+
             &:focus {
               border-color: #aaaaaa;
             }
@@ -342,7 +323,7 @@ menu {
             gap: 10px;
             padding: 5px;
             height: -webkit-fit-content;
-  
+
             .upload {
               overflow: hidden;
               display: flex;
@@ -355,7 +336,7 @@ menu {
               background-color: #ffffff;
               cursor: pointer;
               transition: all 0.3s ease;
-        
+
               &:hover {
                 box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.3);
                 transform: translateY(-4px);
@@ -371,30 +352,30 @@ menu {
                   }
                 }
               }
-  
+
               #preview {
                 overflow: hidden;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-  
+
                 .content {
                   width: 100%;
                   height: 100%;
-  
+
                   &.content-text {
                     font-family: 'Chivo Mono', monospace;
                     background-color: #eeeeee;
                     color: #000000;
                     padding: 4px 7px;
                     white-space: nowrap;
-  
+
                     &.content-code {
                       background-color: #444444;
                       color: #ffffff;
                     }
                   }
-  
+
                   &.content-img {
                     display: block;
                     height: auto;
@@ -402,11 +383,11 @@ menu {
                   }
                 }
               }
-  
+
               #details {
                 flex: 0 0 auto;
                 padding: 6px;
-  
+
                 h1 {
                   margin-top: 0;
                   font-size: 21px;
@@ -418,7 +399,7 @@ menu {
                   line-height: 25px;
                   max-height: 50px;
                 }
-  
+
                 #infos {
                   font-size: 14px;
                   color: #888888;
@@ -485,7 +466,7 @@ main {
       text-decoration: underline;
       text-decoration-color: #cccccc;
       text-decoration-thickness: 2px;
-    
+
       &:empty {
         text-decoration: none;
 
@@ -520,11 +501,11 @@ main {
     border-radius: 0 0 5vw 5vw;
     box-shadow: 0 0.5vw 1.5vw rgba(0, 0, 0, 0.3);
     gap: 5vw;
-  
+
     item {
       width: 7.5vw;
       height: 7.5vw;
-  
+
       i {
         font-size: 5.75vw;
       }
@@ -634,32 +615,32 @@ main {
     padding: 0;
     max-width: 90vw;
     width: 90vw;
-  
+
     #article-id {
       font-size: 4vw;
     }
-  
+
     h1, subtitle {
       &.editable {
         text-decoration-thickness: 0.75vw;
       }
     }
-  
+
     #description-container {
       margin: 5vw;
       margin-top: 0;
-  
+
       div:first-child {
         font-size: 3.5vw;
         margin-bottom: 0.75vw;
       }
-  
+
       #description {
         font-size: 4.25vw;
         text-decoration-thickness: 0.5vw;
       }
     }
-  
+
     #editor-content {
       border-radius: 5vw;
       border-width: 0.25vw;

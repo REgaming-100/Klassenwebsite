@@ -10,10 +10,13 @@ document.addEventListener("DOMContentLoaded", function () {
     data = "request-type=search&search-term=" + valueEntered;
     $.ajax({
       type: "GET",
-      data: data,
+      data: {
+        "request-type": "search",
+        "search-term": valueEntered
+      },
       url: "api/article-server.php",
       success: function (response) {
-        json = JSON.parse(response);
+        json = JSON.parse(response)
         $(".articles").html("");
         $.each(json, function (idx, e) {
           date = new Date(e.infos.date * 1000);
