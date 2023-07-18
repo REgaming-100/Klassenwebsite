@@ -179,7 +179,6 @@ function serveFile($path) {
   header("Content-Type: ". mime_type($path));
   header("Content-Length: ". filesize($path));
   @readfile($path);
-  httpResponse(200);
   $finfo = null;
   exit();
 }
