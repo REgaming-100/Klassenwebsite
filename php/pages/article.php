@@ -121,10 +121,12 @@ function iterateTags($elementArray) {
           break;
         case "personsays":
           unset($file);
-          foreach (glob("assets/images/profiles/*") as $imgFile) {
-            if (pathinfo($imgFile)["filename"] == $parameters[0]) {
-              $file = basename($imgFile);
-              break;
+          if (isset($parameters[0])) {
+            foreach (glob("assets/images/profiles/*") as $imgFile) {
+              if (pathinfo($imgFile)["filename"] == $parameters[0]) {
+                $file = basename($imgFile);
+                break;
+              }
             }
           }
           if (!isset($file)) {
